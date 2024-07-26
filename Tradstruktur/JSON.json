@@ -1,0 +1,88 @@
+{
+  "Datum": "2024-07-06",
+  "Tid": "13:30",
+  "Trad": [{
+      "id": 1,
+      "niva": 101,
+      "kod": 101,
+      "nivaOvanId": 0,
+      "nivaOvanKod": 0,
+      "giltigFrom": "20240701",
+      "giltigTom": "",
+      "namn": "Toppnivå"
+    }, {
+      "id": 2,
+      "niva": 102,
+      "kod": 102,
+      "nivaOvanId": 1,
+      "nivaOvanKod": 101,
+      "giltigFrom": "20240701",
+      "giltigTom": "",
+      "namn": "Avdelning A"
+    }, {
+      "id": 3,
+      "niva": 103,
+      "kod": 103,
+      "nivaOvanId": 1,
+      "nivaOvanKod": 101,
+      "giltigFrom": "20300701",
+      "giltigTom": "",
+      "namn": "Avdelning B"
+    }, {
+      "id": 4,
+      "niva": 104,
+      "kod": 104,
+      "nivaOvanId": 1,
+      "nivaOvanKod": 101,
+      "giltigFrom": "20000101",
+      "giltigTom": "20200101",
+      "namn": "Avdelning C"
+    }, {
+      "id": 5,
+      "niva": 104,
+      "kod": 104,
+      "nivaOvanId": 1,
+      "nivaOvanKod": 101,
+      "giltigFrom": "19900101",
+      "giltigTom": "",
+      "namn": "Avdelning D"
+    }, {
+      "id": 6,
+      "niva": 105,
+      "kod": 105,
+      "nivaOvanId": 5,
+      "nivaOvanKod": 104,
+      "giltigFrom": "19900101",
+      "giltigTom": "",
+      "namn": "Avdelning D1.1"
+    }, {
+      "id": 7,
+      "niva": 106,
+      "kod": 106,
+      "nivaOvanId": 6,
+      "nivaOvanKod": 105,
+      "giltigFrom": "19900101",
+      "giltigTom": "",
+      "namn": "Avdelning D2.1"
+    }, {
+      "id": 8,
+      "niva": 108,
+      "kod": 108,
+      "nivaOvanId": 2,
+      "nivaOvanKod": 102,
+      "giltigFrom": "19900101",
+      "giltigTom": "",
+      "namn": "Avdelning D2.1"
+    }, {
+      "id": 9,
+      "niva": 109,
+      "kod": 109,
+      "nivaOvanId": 1,
+      "nivaOvanKod": 101,
+      "giltigFrom": "19900101",
+      "giltigTom": "",
+      "namn": "Avdelning X"
+    }
+
+  ]
+}

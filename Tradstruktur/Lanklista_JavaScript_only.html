@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Länkar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<meta charset="utf-8">
+</head>
+
+<!--
+ ===============================================================================================================================================
+                                           Visualisera data i en trädstruktur (länklista)
+ ===============================================================================================================================================
+         Skapad av : Peter Jonsson
+  	     Version   : 1.0
+  	     Datum     : 2024-xx-xx
+         Revision  : xxxx-xx-xx v x.xx
+ ===============================================================================================================================================
+      
+
+
+
+ ===============================================================================================================================================
+           H Ä R   N E D A N   M E L L A N   < S C R I P T >   T A G G A R N A   S Å   L I G G E R
+				        I N F O R M A T I O N E N   F Ö R   O R G A N I S A T I O N S T R Ä D E T
+ ===============================================================================================================================================
+ -->
+<script id="strukturdata" type="application/json">
+{"Datum":"2024-07-19","Tid":"13:20:00","Trad":[{"id":"1","nivaOvanId":"0","namn":"Division 1"},{"id":"2","nivaOvanId":"0","namn":"Division 2"},{"id":"3","nivaOvanId":"0","namn":"Division 3"},{"id":"4","nivaOvanId":"0","namn":"Division 4"},{"id":"5","nivaOvanId":"1","namn":"Division 1.1"},{"id":"6","nivaOvanId":"2","namn":"Division 2.1"},{"id":"7","nivaOvanId":"3","namn":"Division 3.1"},{"id":"8","nivaOvanId":"4","namn":"Division 4.1"},{"id":"9","nivaOvanId":"5","namn":"Google","lank":"https://www.google.se/"},{"id":"10","nivaOvanId":"5","namn":"Google Maps","lank":"https://www.google.se/maps/"}]}
+</script>
+
+<!-- 
+ ===============================================================================================================================================
+-->
+
+<style type="text/css">
+body,button { font-family: Verdana;font-size: 12px;}
+div.innehall {border:1px dashed #b0b0b0}
+ul.lnktrad li { line-height:20px;list-style-type: none;position: relative;}
+ul.lnktrad li ul { line-height:20px;display: none;}
+ul.lnktrad li.open &gt; ul { display: block;}
+ul.lnktrad li a {color: black;text-decoration: none;}
+a.trad { height: 1em;padding: 0.1em;font-size: .8em;display: block;position: absolute;left: -4.5em;top: -.1em;height: 20px;content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAUCAYAAAAKuPQLAAABgWlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKM+Vkc8rRFEUxz8MjRiNIj/KYtKwQn6U2FiM/CosxiiDzZs3782oeeP13kiTrbJVlNj4teAvYKuslSJSsp41sUHPeWZqJmXh3u45n/u995zuORfKIynVsCt6wEhnrPB4KDAfXQh4c3ippZEmWhTVNqdnxyL8Od7vKXP9bZebi/+Nmrhmq1BWJTysmlZGeEJ4ai1jurwj3KAmlbjwmXCnJQ8UvnP1WJ5zLify/OmyFQmPSG11woFECcdKWE1ahrBUTtBIraqF97iV+LT03Kz4Nlmt2IQZJ0SASUYZYYBehsQO0EUf3bLjj/ien/gZViRWFWuSxWKZBEkydIq6Ktk18bromswUWbf/v/tq6/19+ey+EFQ+O85rO3i34WvLcT6OHOfrGDxPcJkuxq8cwuCb6FtFLXgA/g04vypqsV242ITmR1OxlB/JI6tc1+HlFGqjUH8D1Yv5nhXOOXmAyLp81TXs7UOH3PcvfQNel2fih5MJ/gAAAAlwSFlzAAAOxAAADsQBlSsOGwAABp9pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+Cjx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNS4wIj4KIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIgogICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIgogICAgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iCiAgICB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIgogICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iCiAgIHRpZmY6SW1hZ2VMZW5ndGg9IjIwIgogICB0aWZmOkltYWdlV2lkdGg9IjM3IgogICB0aWZmOlJlc29sdXRpb25Vbml0PSIyIgogICB0aWZmOlhSZXNvbHV0aW9uPSI3Mi8xIgogICB0aWZmOllSZXNvbHV0aW9uPSI3Mi8xIgogICB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBFbGVtZW50cyAyNC4wIChXaW5kb3dzKSIKICAgeG1wOk1vZGlmeURhdGU9IjIwMjQtMDctMTRUMDA6NDg6MTQrMDI6MDAiCiAgIHhtcDpNZXRhZGF0YURhdGU9IjIwMjQtMDctMTRUMDA6NDg6MTQrMDI6MDAiCiAgIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjUwRkRBNzIzRTk0MTFFRjhDODFCRTE4NTVCOUU4MkYiCiAgIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjUwRkRBNzEzRTk0MTFFRjhDODFCRTE4NTVCOUU4MkYiCiAgIGV4aWY6UGl4ZWxYRGltZW5zaW9uPSIzNyIKICAgZXhpZjpQaXhlbFlEaW1lbnNpb249IjIwIgogICBleGlmOkNvbG9yU3BhY2U9IjEiCiAgIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiCiAgIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSI+CiAgIDx4bXBNTTpEZXJpdmVkRnJvbQogICAgeG1wTU06ZG9jdW1lbnRJRD0ieG1wLmRpZDoyNTBGREE3MDNFOTQxMUVGOEM4MUJFMTg1NUI5RTgyRiIKICAgIHhtcE1NOmluc3RhbmNlSUQ9InhtcC5paWQ6MjUwRkRBNkYzRTk0MTFFRjhDODFCRTE4NTVCOUU4MkYiLz4KICAgPHhtcE1NOkhpc3Rvcnk+CiAgICA8cmRmOlNlcT4KICAgICA8cmRmOmxpCiAgICAgIHN0RXZ0OmFjdGlvbj0icHJvZHVjZWQiCiAgICAgIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFmZmluaXR5IFBob3RvIDIgMi41LjMiCiAgICAgIHN0RXZ0OndoZW49IjIwMjQtMDctMTRUMDA6NDg6MTQrMDI6MDAiLz4KICAgIDwvcmRmOlNlcT4KICAgPC94bXBNTTpIaXN0b3J5PgogICA8ZGM6dGl0bGU+CiAgICA8cmRmOkFsdD4KICAgICA8cmRmOmxpIHhtbDpsYW5nPSJ4LWRlZmF1bHQiPmdyZWVuPC9yZGY6bGk+CiAgICA8L3JkZjpBbHQ+CiAgIDwvZGM6dGl0bGU+CiAgPC9yZGY6RGVzY3JpcHRpb24+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+uPKXRAAAAqFJREFUSEvNlD1ME3EYh58evbZQKOVKC6UCRkBAqWKiJoLBzZDo5oIOGncWNSQmmrAoDkZXDYObKC46GKOrH6DBGD4aRCAplQ+hH9BC2yu05YR4SYMRo6SX8Cw3/N/fe0/e/3unUzZglyGoz12FppO6+fwuo989OF0uZnw/qNvXQGPtUc4fOKVW/BnNpE5eb0MpT6NIKUQlhV4xYhNLcJkrIAZV5kraz7Sp1VvR5Pqu9t4jEguyMh9krm+Q2OwC+liYNdnLTGQAS51CtCDE05E3amIrWZ9U/bVWIvISBr0OpUCPLkfGTIrC4jxSOhnFoFDkdNBc1opFKebKsUtqMkNWJ9V+/w56QxxBjGEz6ylTBI6bSmixVuNcFqmz7qFMsuOwSyQKk0yEJrj1qltNZ8iqlOebB5tko6LShdtdTaF+nfz4CvtL7EjpHCyyCUkoZWxoge5nj+gb7sMX8KnpDFmVqm9oICqa8K/KjMxN4mqqIViapD/0BefhSjwTEwx8GmNqKk6SdSwOG0vRiJrOkDWpzo1rGF4axTv5lch8AP+0n/f9n/EZdSyKAmvLEaREHNt6iqoiK8WuKmLrAsF4VO2QIWtS4cAi7vqDGM0ieYJIvbQXd44T62gYx0KaZc8szlwHxrQOs6jDEjeyOr2CKa5TO2TI6td348UDZEMMecFPQTyJKRrEO/YR01oCi9GByVZOYmO/ZvQpfP4QzvxSmmpP0HHustrhF5r+0T/09fD4YSe5q0kaG09z9mIHRa4a9XR7srrov9PcdIEjh1oQDMXk5tv/SWgTTaU2scpGxEQO6f94laZSI29fMusdR0glWJrzMfjutXrydzST6u15QtftLsbnAhilEqaCYUa8PobGx9SK7dF00XeK5ju1E3ahFPwEW6L8lTyqRD8AAAAASUVORK5CYII);}
+ul.lnktrad li a.gul:before {height: 1em;padding: 0.1em;font-size: .8em;display: block;position: absolute;left: -4.5em;top: -.1em;height: 20px;content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAUCAYAAAAKuPQLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAFDSURBVEhL7Za9bsIwFIWvm0gUVSpIDKhiYu/UgaFv0AFW3qfP0OdgQeIZWMPEysZQhEI7VIAS7k/Mn0XsIVdi6CHxuXYinw/HoJgcBXemh8LvSmor9TMbAE8th7iNOqvJonoXGq9f3CepQW2SPjx3hljR9JmkkzPRpa8WY2j1JliL9B4ff1U/kFxHO5MalOSEAGXXTMorFQAkY9Q/yYGqaovJPAFAWF9HOlDGmKKqQn4ghwil/PhCgKyfpLfROQhPD1Ce7bjM97/YF+mtFMm3QthPlwlE8SOk80/sixRXils8bwPR+PZvDc2XN9imMxwTOVCV/cHb8BIgcsqL4tpFrgNV1a+PIzxA7DRsvZDenuIQakqA0Pm2o4v09hS35UByHe3oIrW3hO/ph/CQsLA1x8lReA6GPvETtN9HfM//m2eYAA4r3TD6fzxVYQAAAABJRU5ErkJggg==);}
+ul.lnktrad li a.gulPlus:before {height: 1em;padding: 0.1em;font-size: .8em;display: block;position: absolute;left: -4.5em;top: -.1em;height: 20px;content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAUCAYAAAAKuPQLAAABgWlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kd8rg1EYxz/baGJrivwoF0vjasTU4sbFxChcbFOGm+21H2o/3t53S8utcqsocePXBX8Bt8q1UkRKrndN3KDX85qaZM/pOc/nfM95ns55DlgjGSWr1w1ANlfQQsGAez664LaXseOkjXY6Y4quzoQnItS0tzssZrzpM2vVPvevNS0ndAUsDcKjiqoVhCeFp1cLqsnbwq1KOrYsfCrs1eSCwremHq9w2eRUhT9M1iKhMbA2C7tTvzj+i5W0lhWWl+PJZorKz33MlzgSubmwxG7xLnRCBAngZopxxvAzyIjMfvrw0S8rauQPfOfPkpdcRWaVEhorpEhTwCtqUaonJCZFT8jIUDL7/7evenLIV6nuCED9k2G89IB9Cz43DeP90DA+j8D2CBe5an7+AIZfRd+sap59cK3D2WVVi+/A+QZ0PKgxLfYt2cStySQ8n4AzCi3X0LhY6dnPPsf3EFmTr7qC3T3olfOupS9el2fi1OdVngAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAX5JREFUSIm1lsFKw0AQhv9NAiqC9OJBPPkAXrz5Blrw7JP4KD6FePKiT6DoqfoA4qUIoZbai1TY38PsbDaSboNOl8AuJGQ+vp3dGQfD8Tk6I0lAHplJeZmsSaDcOsDg8NJ1/aeyhCKJnf1zIYCX6PCBqD1P3m6W/scUKuqBx3x8jZy1onD4eBqyy5qtKQBq6D/W7E1p8KBnPr7KGiOJonCYPA6pxsxzSm2otb8YKyyhApoEUWtJnuWAGrvWUEQMotbSPMsD6bfGUAKiwQJlmmcZoJBg9lDCoQFkzb5A8MpkbQpJgGAN6AUUiayhmusgbF9M+D5ADZitKQUBo7V2ni0Hov9ez/Z1H3+sNgRi9j5CWW1i+nJBe1NaZgIMW6DdQKDH4muKwd4RFrNn6zJD1K93AKTgNsc8D6TbXFYbIGkLtXt8Gyt9/XDKeHmuAGodCK6lzISh1nqWmdD+gbDuEpKh1tRYv7onc2c7ajnq+5PYqUifpctf7QwIBwdXbeMH50zDhPIM2hMAAAAASUVORK5CYII);}
+ul.lnktrad li a.gron:before {height: 1em;padding: 0.1em;font-size: .8em;display: block;position: absolute;left: -4.5em;top: -.1em;height: 20px;content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAUCAYAAAAKuPQLAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAy1pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDkuMC1jMDAwIDc5LjE3MWMyN2YsIDIwMjIvMDgvMTYtMTg6MDI6NDMgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBFbGVtZW50cyAyNC4wIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoyNTBGREE3MTNFOTQxMUVGOEM4MUJFMTg1NUI5RTgyRiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoyNTBGREE3MjNFOTQxMUVGOEM4MUJFMTg1NUI5RTgyRiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjI1MEZEQTZGM0U5NDExRUY4QzgxQkUxODU1QjlFODJGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjI1MEZEQTcwM0U5NDExRUY4QzgxQkUxODU1QjlFODJGIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+QyBgvQAAAGBJREFUeNpi/P//P8NgA0wMgxCw0Mpg5U2+JEXBXb/NjDR3FAhMNr1IlLrc0/qDP/pGHTXqqFFHjVhHwcoo5MJ2UIQUeiE7Gn2jjqI2YKRVI4/Upgty84VxtOVJJAAIMAB5PRlCrMEW+AAAAABJRU5ErkJggg);}
+ul.lnktrad li a.gronPlus:before {height: 1em;padding: 0.1em;font-size: .8em;display: block;position: absolute;left: -4.5em;top: -.1em;height: 20px;content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAUCAYAAAAKuPQLAAABgWlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kd8rg1EYxz/baGJrivwoF0vjasTU4sbFxChcbFOGm+21H2o/3t53S8utcqsocePXBX8Bt8q1UkRKrndN3KDX85qaZM/pOc/nfM95ns55DlgjGSWr1w1ANlfQQsGAez664LaXseOkjXY6Y4quzoQnItS0tzssZrzpM2vVPvevNS0ndAUsDcKjiqoVhCeFp1cLqsnbwq1KOrYsfCrs1eSCwremHq9w2eRUhT9M1iKhMbA2C7tTvzj+i5W0lhWWl+PJZorKz33MlzgSubmwxG7xLnRCBAngZopxxvAzyIjMfvrw0S8rauQPfOfPkpdcRWaVEhorpEhTwCtqUaonJCZFT8jIUDL7/7evenLIV6nuCED9k2G89IB9Cz43DeP90DA+j8D2CBe5an7+AIZfRd+sap59cK3D2WVVi+/A+QZ0PKgxLfYt2cStySQ8n4AzCi3X0LhY6dnPPsf3EFmTr7qC3T3olfOupS9el2fi1OdVngAAAAlwSFlzAAALEwAACxMBAJqcGAAAAJtJREFUSIljZKAyUNro858U9ff8tzCii7FQzzkIMNn0IlHqck/rYxWniaPwWYgOYCGLHGI0cxQDA/khRlNHYbMQF0AOMZo7ioGB9BBjoqVjyAWjjiIWjDqKWDDqKGLBoHEUrIxS2ujzf9A4ioEBUcjSxFHEVi24ANUddc9/CyO2NhIpgKbRR26I0cxRlIQYRcFMDCC1eczAwMAAAI0UKZGzgVMeAAAAAElFTkSuQmCC);}
+ul.lnktrad li a.rod:before {height: 1em;padding: 0.1em;font-size: .8em;display: block;position: absolute;left: -4.5em;top: -.1em;height: 20px;content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAUCAYAAAAKuPQLAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAy1pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDkuMC1jMDAwIDc5LjE3MWMyN2YsIDIwMjIvMDgvMTYtMTg6MDI6NDMgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBFbGVtZW50cyAyNC4wIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3OEYzMzQ4MDNFOTUxMUVGQjY4MTlCNTU1N0U1NTU5MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3OEYzMzQ4MTNFOTUxMUVGQjY4MTlCNTU1N0U1NTU5MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjc4RjMzNDdFM0U5NTExRUZCNjgxOUI1NTU3RTU1NTkxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjc4RjMzNDdGM0U5NTExRUZCNjgxOUI1NTU3RTU1NTkxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+bat3pAAAAF1JREFUeNpi/P//P8NgA0wMgxCw0MrgTkYxkqKg/P8rRpo7CgRSZfiJUjf7ycfBH32jjhp11KijRqyjYGUUcmE7KEIKvZAdjb5RRw2Zpgu22p9YdYyjLU8iAUCAAQBspxamgGkqLgAAAABJRU5ErkJggg);}
+ul.lnktrad li a.rodPlus:before {height: 1em;padding: 0.1em;font-size: .8em;display: block;position: absolute;left: -4.5em;top: -.1em;height: 20px;content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAUCAYAAAAKuPQLAAABgWlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kd8rg1EYxz/baGJrivwoF0vjasTU4sbFxChcbFOGm+21H2o/3t53S8utcqsocePXBX8Bt8q1UkRKrndN3KDX85qaZM/pOc/nfM95ns55DlgjGSWr1w1ANlfQQsGAez664LaXseOkjXY6Y4quzoQnItS0tzssZrzpM2vVPvevNS0ndAUsDcKjiqoVhCeFp1cLqsnbwq1KOrYsfCrs1eSCwremHq9w2eRUhT9M1iKhMbA2C7tTvzj+i5W0lhWWl+PJZorKz33MlzgSubmwxG7xLnRCBAngZopxxvAzyIjMfvrw0S8rauQPfOfPkpdcRWaVEhorpEhTwCtqUaonJCZFT8jIUDL7/7evenLIV6nuCED9k2G89IB9Cz43DeP90DA+j8D2CBe5an7+AIZfRd+sap59cK3D2WVVi+/A+QZ0PKgxLfYt2cStySQ8n4AzCi3X0LhY6dnPPsf3EFmTr7qC3T3olfOupS9el2fi1OdVngAAAAlwSFlzAAALEwAACxMBAJqcGAAAAJZJREFUSIntljEKwCAMRb+leye3Xq938Ajeodfr5tQT2EkU0ZKoAQffGAJ5fCFGYTAW2nP6DZzKa/s4nch1HqS++3mLdRGpv4E5Idk0MTEpoD0xUanSwBppYuJSAD+xTVKmlSVFZUlRWVJUppEKO8pC+2mkgLhkRaSoX0uN4VIGTpVuJA6iz9eamJhUT2JdMVPgnscA8AHncCe5pRi66QAAAABJRU5ErkJggg);}
+ul.lnktrad li a.rod {text-decoration: line-through}
+ul.lnktrad li a.rodPlus {text-decoration: line-through}
+.innehall {padding: 16px;}
+</style>
+<body>
+
+<span style="font-weight:bold;">Länklista</span>
+<br/>
+<br/>
+<!-- =====[ Knappar för att expandera/komprimera trädet ]===== --->
+<button onclick="expandera();">Expandera</button>
+<button onclick="komprimera();">Komprimera</button>
+<!-- <button onclick="parse();">&#160;&#160;&#160;Logg&#160;&#160;&#160;</button> -->
+<br/><br/>
+<b>Sök i namnet</b><div id="search" style="padding-botgiltigTom:5px"><input id="searchtext" type="text" id="search" style="width:800px;" onkeydown="event.keyCode==13?sok():void(0);">&#160;<button onclick="sok();" style="width:150px;">Sök</button>&#160;<button onclick="nollstallSokmarkering();">Nollställ sökträffsmarkering</button></div>
+<div id="traffbild" style="padding:5px;font-weight:italic;color:#0000ff">0 träffar</div>
+
+<div id="orginfo" style="padding-botgiltigTom:5px">&#160;</div>
+
+<!-- =====[ Yta att rita upp trädet - en första nivå är skapad med id 0 = Myndigheter - översta posten refererar till denna ]==== -->
+<div class="innehall"  oncontextmenu="false;">
+
+	<div id="info"></div>
+	<ul class="lnktrad" id="strukturen">
+		<li id="d0"><a href="javascript:toggla('0');" id="l0" data-egen="0" title="ID: 0" class="gul" draggable="true" ondragstart="dra(event)" ondrop="slapp(event)" ondragover="slappOvanfor(event)">Toppnivå&nbsp;</a></li>
+	</ul>
+	
+</div>
+
+<div id="logg"></div>
+
+<!-- =====[ Skript för att hantera trädet ]==== -->
+<script>
+
+	// ====[ Variabeldeklarationer ]====
+	var debug = true;		// Debug loggning till webbläsarens konsol
+	var innehall ="";
+	var datum = "";
+	var mappfarg = "";
+	var hierarki = new Array();
+	var d = Number(new Date().toISOString().slice(0, 10).replace(/-/g, ""));  // Dagens datum som ett tal för att kunna jämföra
+	var x = JSON.parse( document.getElementById('strukturdata').innerHTML );
+	var lastDragLog="";
+	var lastDropLog="";
+	var lastOnDropLog="";
+	var draID="";
+
+	document.addEventListener("contextmenu", (e) => {e.preventDefault()});
+	
+	// ====[ Skriv ut när informationen genererades ]====
+	var info=document.getElementById("info");
+	info.insertAdjacentHTML("beforebegin","Data ifrån - <b>"+x.Datum+"</b> - <b>"+x.Tid+"</b> - <b>Antal poster </b>"+x.Trad.length+" st");
+
+	if(debug) console.log("Antal element i JSON "+x.Trad.length);
+
+	// ====[ Bygg upp trädet genom att loopa igenom JSON-koden ]====
+	for(var i=0;i<x.Trad.length;i++) {
+	
+		hierarki[x.Trad[i].id]=x.Trad[i].nivaOvanId;
+		if(debug) console.log(i+". "+x.Trad[i].namn+"  - id "+x.Trad[i].id+" - ovan id "+x.Trad[i].nivaOvanId );
+		
+
+		var title = "ID: "+x.Trad[i].id+" - "+x.Trad[i].namn;
+		
+		// ====[ Bygg raden som skall presenteras ]====
+		innehall = "<li id=\"d"+x.Trad[i].id+"\" data-egen=\""+i+"\" title=\""+title+"\" draggable==\"true\" ondragstart=\"dra(event)\" ondrop=\"slapp(event)\" ondragover=\"slappOvanfor(event)\">";
+
+
+
+		if( typeof(x.Trad[i].lank) != 'undefined' && x.Trad[i].lank != null  ) {
+			mappfarg = "gron";
+			innehall += "<a href=\""+x.Trad[i].lank+"\" id=\"l"+x.Trad[i].id+"\" target=\"_new\"class=\""+mappfarg+"\" onmouseover=\"visaStatus("+i+")\" onmouseout=\"doljStatus();\">"+x.Trad[i].namn+"</a></li>";
+		} else {
+			mappfarg = "gul";
+			innehall += "<a href=\"javascript:toggla('"+x.Trad[i].id+"');\" id=\"l"+x.Trad[i].id+"\" class=\""+mappfarg+"\" onmouseover=\"visaStatus("+i+")\" onmouseout=\"doljStatus();\">"+x.Trad[i].namn+"</a></li>";			
+		}
+		
+		var element = document.getElementById("d"+x.Trad[i].nivaOvanId);
+		
+		// ====[ Kontrollera om textnivån finns ]====
+		if( typeof(element) != 'undefined' && element != null ) {
+
+			cls = String( document.getElementById("l"+x.Trad[i].nivaOvanId).className );
+						
+			// ====[ Kontrollera om det finns undernivåer, but då ikon ]=====
+			if( cls.substring(cls.length-4)!="Plus") {
+				document.getElementById( "l"+x.Trad[i].nivaOvanId ).className=cls+"Plus";
+			}
+			
+			var midlvl = document.getElementById("m"+x.Trad[i].nivaOvanId);
+			
+			// ====[ Saknas mellannivån för att hålla listan, skapa den ]=====
+			if(  typeof(midlvl) == 'undefined' || midlvl == null ) {
+				document.getElementById( "d"+x.Trad[i].nivaOvanId ).insertAdjacentHTML("beforeend","<ul id=\"m"+x.Trad[i].nivaOvanId+"\"></ul>");
+			}
+		}
+		
+		var midlvl = document.getElementById("m"+x.Trad[i].nivaOvanId);
+		midlvl.insertAdjacentHTML("beforeend",innehall);
+	
+	}
+
+// ===========================================================================
+//                      Expandera hela trädet
+// ===========================================================================
+function toggla(elementname) {
+
+	var ename = "m"+elementname;
+	var elem = document.getElementById(ename);
+	
+	if(debug) console.log("TOGGLA ID "+elementname+" ["+ename+"] = "+elem);
+	
+	// ====[ Kontrollera om det finns ett element att expandera ]====
+	if( typeof(elem) != 'undefined' && elem != null ) {
+	
+		// =====[ Skall det tändas eller släckas ]=====
+		if(elem.style.display=="block") {
+			elem.style.display="none";
+		} else {
+			elem.style.display="block";
+		}
+	} 
+}
+
+// ===========================================================================
+//                      Expandera hela trädet
+// ===========================================================================
+function expandera() {
+	if(debug) console.log("EXPANDERA ALLA");
+	
+	container = document.querySelector("#strukturen");
+  traffar = container.querySelectorAll("ul.lnktrad li ul");
+	
+  if(debug) console.log("Antal element att expandera = "+traffar.length+" st");
+
+	traffar.forEach((tag) => {
+		tag.style.display="block";
+	});
+
+}
+
+// ===========================================================================
+//                    Komprimera hela trädet
+// ===========================================================================
+function komprimera() {
+	if(debug) console.log("KOMPRIMERA ALLA");
+	
+	container = document.querySelector("#strukturen");
+	
+  traffar = container.querySelectorAll("ul.lnktrad li ul");
+  if(debug) console.log("Antal element att komprimera  = "+traffar.length+" st");
+
+	traffar.forEach((tag) => {
+		tag.style.display="none";
+	});
+
+}
+
+// ===========================================================================
+//        Fixa till datumformatet så att det går att nyttja vid jämförelser
+// ===========================================================================
+function skapaDatum( datum ) {
+	nyttDatum = datum.substring(0,4)+"-"+datum.substring(4,6)+"-"+datum.substring(6,8);
+	return nyttDatum;
+}	
+
+// ===========================================================================
+//                  Visa information om posten
+// ===========================================================================
+function visaStatus(id) {
+	
+	var info = "ID: <b>"+x.Trad[id].id+"</b>";
+	
+	document.getElementById("orginfo").innerHTML=info;
+}
+
+// ====[ Ta bort info i DIV för organisationsinfo ]====
+function doljStatus() {
+	document.getElementById("orginfo").innerHTML="&#160;";
+}
+
+// ====[ Gå igenom alla element med information ]====
+function parse() {
+	
+	var logger = document.getElementById("logg");
+	var i = 0;
+	
+	container = document.querySelector("#strukturen");
+	traffar = container.querySelectorAll("a");
+	
+	logger.insertAdjacentHTML("beforeend","<br/>Antal A HREF-element "+traffar.length+" st <br/><br/>");
+
+	traffar.forEach((tag) => {
+		logger.insertAdjacentHTML("beforeend",(i+1)+".  "+tag.id+" - "+tag.text+"<br/>");
+		i++;
+	});
+
+}
+
+// ===========================================================================
+//                      Nollställ sökmarkeringen
+// ===========================================================================
+function nollstallSokmarkering() {
+
+	for(var i=0;i<x.Trad.length;i++) {
+	
+		elemt = document.getElementById("l"+x.Trad[i].id);
+		if(typeof(elemt)!='undefined' && elemt!=null ){
+			elemt.style.backgroundColor="#ffffff";
+			elemt.style.border="none";
+		}
+
+	}
+	
+	var traffbild = document.getElementById("traffbild");
+
+	// ====[ Kontrollera så att elementet träffbild finns ]====
+	if( typeof(traffbild)!='undefined' && traffbild!=null ) {
+		traffbild.innerHTML="0 träffar";
+	}
+	
+	// ====[ Kontrollera så att elementet soktext finns ]====
+	var soktext = document.getElementById("searchtext");
+	if( typeof(soktext)!='undefined' && soktext!=null ) {
+		soktext.value="";
+	}
+	
+	komprimera();
+}
+
+// ===========================================================================
+//                              Sökningen
+// ===========================================================================
+function sok() {
+
+	var sokStrang = document.getElementById("searchtext").value;
+
+	if(sokStrang=="") exit();
+	if(debug) console.log( "Söker efter "+sokStrang );
+	
+	var hits = 0;
+	
+	// ====[ Gå igenom trädet och matcha ]====
+	for(var i=0;i<x.Trad.length;i++) {
+		
+		if(x.Trad[i].namn.toUpperCase().search(sokStrang.toUpperCase())!=-1) {
+    
+			if(debug) console.log( "  - Sökträff rad "+i+" id ovan:"+x.Trad[i].id+" ovan:"+x.Trad[i].nivaOvanId );		
+			hits++;
+
+			// ====[ Markera element med sökträff ]====
+			elemt2 = document.getElementById("l"+x.Trad[i].id);
+			
+			if(typeof(elemt2)!='undefined' && elemt2!=null ){
+				elemt2.style.border="1px solid #ffff66";
+				elemt2.style.padding="2px 2px 2px 2px";
+				elemt2.style.backgroundColor="#ffff66";
+			}
+
+			// ====[ Kontrollera ovanliggande nivå om den skall "öppnas" ]====
+			var disp = x.Trad[i].id;
+			elemt = document.getElementById( "m"+hierarki[disp] );
+			
+			// ====[ Expandera nivåerna ovanför så att man kan se träffarna ]====
+			while( typeof(elemt)!='undefined' && elemt!=null ) {
+				elemt.style.display="block";
+				
+				disp = hierarki[disp];  // Hämta ovanliggande nivå
+				elemt = document.getElementById("m"+disp);
+			}
+			
+		}
+	}
+	
+	var traffbild = document.getElementById("traffbild");
+
+	// ====[ Kontrollera så att elementet träffbild finns ]====
+	if( typeof(traffbild)!='undefined' && traffbild!=null ) {
+		traffbild.innerHTML="Träffbild "+hits+" st";
+		traffbild.innerHTML=hits+" träffar (sökord: '"+document.getElementById("searchtext").value+"')";
+	}
+	
+	if(debug) console.log( "Antal träffar "+hits+" st" );
+}
+
+// ===========================================================================
+//   Nollställ den visade informationen när man inte står på en organisation
+// ===========================================================================
+function doljStatus() {
+	document.getElementById("orginfo").innerHTML="&#160;";
+}
+
+
+// ===========================================================================
+//                   DEBUG information till ett lager
+// ===========================================================================
+function parse() {
+	
+	var logger = document.getElementById("logg");
+	var i = 0;
+	
+	container = document.querySelector("#strukturen");
+	traffar = container.querySelectorAll("a");
+	
+	logger.insertAdjacentHTML("beforeend","<br/>Antal A HREF-element "+traffar.length+" st <br/><br/>");
+
+	traffar.forEach((tag) => {
+		logger.insertAdjacentHTML("beforeend",(i+1)+".  "+tag.id+" - "+tag.text+"<br/>");
+		i++;
+	});
+
+}
+
+// ===========================================================================
+//  
+// ===========================================================================
+function slappOvanfor(ev) {
+  
+	if(debug) {
+		if(lastDropLog!=ev.target.id)
+			console.log( " - Ovanpå "+ev.target.id );
+		lastDropLog = ev.target.id;			
+	}
+  ev.preventDefault();
+}
+
+// ===========================================================================
+//  
+// ===========================================================================
+function dra(ev) {
+	
+	if(debug) {
+		if(lastDragLog!=ev.target.id)
+		  console.log( "Startar flytt av "+ev.target.id );
+		lastDragLog = ev.target.id;
+	}
+	
+	draID=ev.target.id;
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+// ===========================================================================
+//  
+// ===========================================================================
+function hamtaPost( hittaID ) {
+	
+	// ====[ Gå igenom trädet och matcha ]====
+	for(var i=0;i<x.Trad.length;i++) {
+		if(x.Trad[i].id==hittaID) {
+			return i;
+			break;
+		}
+	}
+	
+	return null;
+}
+// ===========================================================================
+//  
+// ===========================================================================
+function slapp(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+	
+	var dragID = "";
+	var slappID = "";
+	
+	// ====[ Extrahera ID för objektet som dras ]====
+	switch(draID.substring(0,1)) {
+
+		// ====[ HREF ]====
+		case "l":
+			dragID = draID.substring(1);
+			break;
+
+		// ====[ LI ]====
+		case "d":
+			dragID = draID.substring(1);				
+			break;
+
+		// ====[ UL ]====
+		case "m":
+			dragID = draID.substring(1);
+			break;
+		
+		default:
+			dragID = draID;
+	}
+
+	// ====[ Extrahera ID för objektet man släpper ett objekt på ]====
+	switch(ev.target.id.substring(0,1)) {
+	
+		// ====[ HREF ]====
+		case "l":
+			slappID = ev.target.id.substring(1);
+			break;
+
+		// ====[ LI ]====
+		case "d":
+			slappID = ev.target.id.substring(1);				
+			break;
+
+		// ====[ UL ]====
+		case "m":
+			slappID = ev.target.id.substring(1);
+			break;
+		
+		default:
+			slappID = ev.target.id;
+	}
+
+	if(debug) 
+		console.log( "Släpper ID "+dragID+" ["+draID+"] på "+slappID+" ["+ev.target.id+"] - Namn "+x.Trad[hamtaPost(slappID)].namn+" - Länk "+x.Trad[hamtaPost(slappID)].lank);
+	
+	if(ev.target.id.substring(0,1)=="m") {
+	alert('test');
+	}
+	
+	console.log("¤"+typeof(x.Trad[hamtaPost(slappID)].lank));
+	
+	// ====[ Kontrollera om det är inbördes sortering eller en "mapp" ]=====
+	if(typeof(x.Trad[hamtaPost(slappID)].lank)==="undefined") {
+
+		// Står nu på en mapp
+
+		// ====[ Kontrollera om det finns en mellannivå för mappen UL ]=====
+		if(document.getElementById("m"+slappID)) {
+			// =====[ Mellannivåb finns <UL> ]====
+			var slappObj=document.getElementById("m"+slappID);    // Objektet som man släpper på
+		} else {
+			// =====[ Mellannivå för mappen måste skapas <UL> ]====
+			var slappObj=document.getElementById("d"+slappID);    // Objektet som man släpper på
+		}
+	
+	} else {
+		var slappObj=document.getElementById("d"+slappID);    // Objektet som man släpper på
+	}
+	
+	var dragObj=document.getElementById("d"+dragID);      // Objektet som man drar
+	
+	
+	slappObj.appendChild(dragObj);
+	
+}
+
+</script>
+
+</body>
+</html>
