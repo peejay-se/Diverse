@@ -227,7 +227,6 @@
     var debugButton = false;    // Knapp för att testa nya funktioner
 		var content = "";
 		var radnr = 0;
-		var lank = "";
     
     // ====[ Checkboxar id/namn ]====
     var check = new Array("chkAkt","chkKort","chkMarknad","chkISIN","chkAntal","chkVD","chkOrdf","chkPE","chkBranch","chkOmrade");
@@ -254,8 +253,6 @@
 
 
 		document.getElementById("contentarea").style.height = (window.innerHeight - 500) + "px";
-
-		var strBaseURL = "https://www.demo.se";
 
 		if (debug) console.log("Antal element i JSON " + x.Aktielista.length);
 		initiera();
