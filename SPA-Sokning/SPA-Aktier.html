@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>--==[ Aktier ]==--</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+</head>
+
+<!--
+	 ===============================================================================================================================================
+			                         S Ö K   I   E N   J S O N - S T R U K T U R        ( V A N I L L A   J A V S C R I P T )
+	 ===============================================================================================================================================
+					 Skapad av : Peter Jonsson
+					 Version   : 1.0
+					 Datum     : 2025-03-02
+					 Revision  : xxxx-xx-xx v x.xx
+	 ===============================================================================================================================================
+					Data ifrån JSON-filen måste klistras in i denna filen eftersom data räknas annars som osäkert och kommer inte laddas.
+	 ===============================================================================================================================================
+     Detta är en SPA-applikation (Single Page Application)
+
+    JSON-"databasen" bygger på denna strukturen enligt nedan
+    
+      {
+        "Aktier": [{
+            "Aktie": "Aktienamn",
+            "Kortnamn": "Kortnamn",
+            "Marknad": "Marknad",
+            "ISIN": "ISIN",
+            "Antal": "Antal_aktier",
+            "VD": "VD",
+            "Ordf": "Ordforande",
+            "PE": "0,0",
+            "Branch": "Branchindex",
+            "Omrade": "Omraden"
+          }
+        ]
+      }
+
+	 ===============================================================================================================================================
+						             H Ä R   N E D A N   M E L L A N   < S C R I P T >   T A G G A R N A   S Å   L Ä G G S
+							                         I N N E H Å L L E T   I F R Å N   J S O N - F I L E N
+	 ===============================================================================================================================================
+ -->
+<script id="integrationsdata" type="application/json">
+{"Aktielista":[{"Aktie":"ABB","Kortnamn":"ABB","Marknad":"Large Cap Stockholm","ISIN":"CH0012221716","Antal":"438988614","VD":"Morten Wierod","Ordf":"Peter Voser","PE":"24,68","Branch":"OMX Stockholm 30","Omrade":"Process & Automation,Industriella Varor & Tjänster,Industri"},{"Aktie":"Alfa Laval","Kortnamn":"ALFA","Marknad":"Large Cap Stockholm","ISIN":"SE0000695876","Antal":"413326315","VD":"Tom Erixon","Ordf":"Dennis Jönsson","PE":"26,09","Branch":"OMX Stockholm 30","Omrade":"Process & Automation,Industriella Varor & Tjänster,Industri"},{"Aktie":"Assa Abloy B","Kortnamn":"ASSA B","Marknad":"Large Cap Stockholm","ISIN":"SE0007100581","Antal":"1055050365","VD":"Nico Delvaux","Ordf":"Johan Hjertonsson","PE":"23,58","Branch":"OMX Stockholm 30","Omrade":"Säkerhetstjänster,Industriella Varor & Tjänster,Industri"},{"Aktie":"AstraZeneca","Kortnamn":"AZN","Marknad":"Large Cap Stockholm","ISIN":"GB0009895292","Antal":"1267368885","VD":"Pascal Soriot","Ordf":"Michel Demaré","PE":"32,55","Branch":"OMX Stockholm 30","Omrade":"Läkemedel,Bioteknik & Läkemedel,Hälsovård"},{"Aktie":"Atlas Copco A","Kortnamn":"ATCO A","Marknad":"Large Cap Stockholm","ISIN":"SE0017486889","Antal":"3357576384","VD":"Vagner Rego","Ordf":"Hans Stråberg","PE":"29,8","Branch":"OMX Stockholm 30","Omrade":"Process & Automation,Industriella Varor & Tjänster,Industri"},{"Aktie":"Atlas Copco B","Kortnamn":"ATCO B","Marknad":"Large Cap Stockholm","ISIN":"SE0017486897","Antal":"1560876032","VD":"Vagner Rego","Ordf":"Hans Stråberg","PE":"26,26","Branch":"OMX Stockholm 30","Omrade":"Process & Automation,Industriella Varor & Tjänster,Industri"},{"Aktie":"Boliden","Kortnamn":"BOL","Marknad":"Large Cap Stockholm","ISIN":"SE0020050417","Antal":"273511169","VD":"Mikael Staffas","Ordf":"Karl-Henrik Sundström","PE":"10,47","Branch":"OMX Stockholm 30","Omrade":"Basmetaller,Metall & Gruvdrift,Råmaterial"},{"Aktie":"Electrolux B","Kortnamn":"ELUX B","Marknad":"Large Cap Stockholm","ISIN":"SE0016589188","Antal":"274885589","VD":"Yannick Fierling","Ordf":"Torbjörn Lööf","PE":"−17,82","Branch":"OMX Stockholm 30","Omrade":"Vitvaror,Hem & Bostad,Konsumentvaror & Tjänster"},{"Aktie":"Ericsson B","Kortnamn":"ERIC B","Marknad":"Large Cap Stockholm","ISIN":"SE0000108656","Antal":"3086495752","VD":"Börje Ekholm","Ordf":"Jan Carlson","PE":"793,68","Branch":"OMX Stockholm 30","Omrade":"Telekomutrustning,Telekommunikation,Teknologi"},{"Aktie":"Essity B","Kortnamn":"ESSITY B","Marknad":"Large Cap Stockholm","ISIN":"SE0009922164","Antal":"643368835","VD":"Magnus Groth","Ordf":"Jan Gurander","PE":"9,82","Branch":"OMX Stockholm 30","Omrade":"Personlig Hygien,Personliga varor,Konsumentvaror & Tjänster"},{"Aktie":"Evolution","Kortnamn":"EVO","Marknad":"Large Cap Stockholm","ISIN":"SE0012673267","Antal":"211833204","VD":"Martin Carlesund","Ordf":"Jens von Bahr","PE":"11,92","Branch":"OMX Stockholm 30","Omrade":"Betting & Kasino,Konsumenttjänster,Konsumentvaror & Tjänster"},{"Aktie":"Getinge B","Kortnamn":"GETI B","Marknad":"Large Cap Stockholm","ISIN":"SE0000202624","Antal":"254152373","VD":"Mattias Perjos","Ordf":"Johan Malmquist","PE":"35,19","Branch":"OMX Stockholm 30","Omrade":"Medicinsk utrustning,Medicinsk Utrustning & Service,Hälsovård"},{"Aktie":"H&M B","Kortnamn":"HM B","Marknad":"Large Cap Stockholm","ISIN":"SE0000106270","Antal":"1416142225","VD":"Daniel Ervér","Ordf":"Karl-Johan Persson","PE":"20,08","Branch":"OMX Stockholm 30","Omrade":"Kläder & Accessoarer,Personliga varor,Konsumentvaror & Tjänster"},{"Aktie":"Handelsbanken A","Kortnamn":"SHB A","Marknad":"Large Cap Stockholm","ISIN":"SE0007100599","Antal":"1944777165","VD":"Michael Green","Ordf":"Pär Boman","PE":"9,82","Branch":"OMX Stockholm 30","Omrade":"Traditionell Bankverksamhet,Bank,Finans"},{"Aktie":"Hexagon B","Kortnamn":"HEXA B","Marknad":"Large Cap Stockholm","ISIN":"SE0015961909","Antal":"2595227888","VD":"Norbert Hanke (tf)","Ordf":"Ola Rollén","PE":"27,85","Branch":"OMX Stockholm 30","Omrade":"Hårdvaruutrustning,Hårdvara,Teknologi"},{"Aktie":"Investor B","Kortnamn":"INVE B","Marknad":"Large Cap Stockholm","ISIN":"SE0015811963","Antal":"1821936744","VD":"Christian Cederholm","Ordf":"Jacob Wallenberg","PE":"8,69","Branch":"OMX Stockholm 30","Omrade":"Investmentbolag,Investeringar,Finans"},{"Aktie":"Kinnevik B","Kortnamn":"KINV B","Marknad":"Large Cap Stockholm","ISIN":"SE0022060521","Antal":"243217233","VD":"Georgi Ganev","Ordf":"James Anderson","PE":"−9,42","Branch":"OMX Stockholm 30","Omrade":"Investmentbolag,Investeringar,Finans"},{"Aktie":"Nibe Industrier B","Kortnamn":"NIBE B","Marknad":"Large Cap Stockholm","ISIN":"SE0015988019","Antal":"1782936128","VD":"Gert-Eric Lindquist","Ordf":"Hans Linnarson","PE":"71,17","Branch":"OMX Stockholm 30","Omrade":"Klimatlösningar,Industriella Varor & Tjänster,Industri"},{"Aktie":"Nordea Bank","Kortnamn":"NDA SE","Marknad":"Large Cap Stockholm","ISIN":"FI4000297767","Antal":"3497790322","VD":"Frank Vang-Jensen","Ordf":"Stephen Hester","PE":"8,5","Branch":"OMX Stockholm 30","Omrade":"Traditionell Bankverksamhet,Bank,Finans"},{"Aktie":"SAAB B","Kortnamn":"SAAB B","Marknad":"Large Cap Stockholm","ISIN":"SE0021921269","Antal":"533847776","VD":"Micael Johansson","Ordf":"Marcus Wallenberg","PE":"40,46","Branch":"OMX Stockholm 30","Omrade":"Nätleverantörer,Telekommunikation,Teknologi"},{"Aktie":"Sandvik","Kortnamn":"SAND","Marknad":"Large Cap Stockholm","ISIN":"SE0000667891","Antal":"1254385923","VD":"Stefan Widing","Ordf":"Johan Molin","PE":"23,94","Branch":"OMX Stockholm 30","Omrade":"Komponenter & Verktyg,Industriella Varor & Tjänster,Industri"},{"Aktie":"SBB Norden B","Kortnamn":"SBB B","Marknad":"Mid Cap Stockholm","ISIN":"SE0009554454","Antal":"1244164407","VD":"Leiv Synnes","Ordf":"Lennart Sten","PE":"−0,99","Branch":"OMX Stockholm 30","Omrade":"Samhällsfastigheter,Fastigheter & Utveckling,Fastigheter"},{"Aktie":"SCA B","Kortnamn":"SCA B","Marknad":"Large Cap Stockholm","ISIN":"SE0000112724","Antal":"639476059","VD":"Ulf Larsson","Ordf":"Helena Stjernholm","PE":"28,54","Branch":"OMX Stockholm 30","Omrade":"Skog & Massaindustri,Papper & Skogsindustri,Råmaterial"},{"Aktie":"SEB A","Kortnamn":"SEB A","Marknad":"Large Cap Stockholm","ISIN":"SE0000148884","Antal":"2115830987","VD":"Johan Torgeby","Ordf":"Marcus Wallenberg","PE":"9,75","Branch":"OMX Stockholm 30","Omrade":"Traditionell Bankverksamhet,Bank,Finans"},{"Aktie":"Sinch","Kortnamn":"SINCH","Marknad":"Large Cap Stockholm","ISIN":"SE0016101844","Antal":"844556222","VD":"Laurinda Pang","Ordf":"Erik Fröberg","PE":"−3,21","Branch":"OMX Stockholm 30","Omrade":"Nätleverantörer,Telekommunikation,Teknologi"},{"Aktie":"SKF B","Kortnamn":"SKF B","Marknad":"Large Cap Stockholm","ISIN":"SE0000108227","Antal":"426392069","VD":"Rickard Gustafson","Ordf":"Hans Stråberg","PE":"15,25","Branch":"OMX Stockholm 30","Omrade":"Komponenter & Verktyg,Industriella Varor & Tjänster,Industri"},{"Aktie":"Swedbank A","Kortnamn":"SWED A","Marknad":"Large Cap Stockholm","ISIN":"SE0000242455","Antal":"1132005722","VD":"Jens Henriksson","Ordf":"Göran Persson","PE":"8,4","Branch":"OMX Stockholm 30","Omrade":"Traditionell Bankverksamhet,Bank,Finans"},{"Aktie":"Tele2 B","Kortnamn":"TEL2 B","Marknad":"Large Cap Stockholm","ISIN":"SE0005190238","Antal":"684303600","VD":"Jean Marc Harion","Ordf":"Thomas Reynaud","PE":"23,08","Branch":"OMX Stockholm 30","Omrade":"Nätleverantörer,Telekommunikation,Teknologi"},{"Aktie":"Telia Company","Kortnamn":"TELIA","Marknad":"Large Cap Stockholm","ISIN":"SE0000667925","Antal":"3932109286","VD":"Patrik Hofbauer","Ordf":"Lars-Johan Jarnheimer","PE":"17,82","Branch":"OMX Stockholm 30","Omrade":"Nätleverantörer,Telekommunikation,Teknologi"},{"Aktie":"Volvo B","Kortnamn":"VOLV B","Marknad":"Large Cap Stockholm","ISIN":"SE0000115446","Antal":"1588477524","VD":"Martin Lundstedt","Ordf":"Pär Boman","PE":"13,63","Branch":"OMX Stockholm 30","Omrade":"Lastbilar & Tunga Fordon,Industriella Varor & Tjänster,Industri"},{"Aktie":"NVIDIA","Kortnamn":"NVDA","Marknad":"NASDAQ","ISIN":"US67066G1040","Antal":"24400000000","VD":"Jensen Huang","Ordf":"Jensen Huang","PE":"22,61","Branch":"Övrigt","Omrade":"Hårdvaruutrustning,Hårdvara,Teknologi"},{"Aktie":"Microsoft","Kortnamn":"MSFT","Marknad":"NASDAQ","ISIN":"US5949181045","Antal":"7433982235","VD":"Satya Nadella","Ordf":"Satya Nadella","PE":"31,47","Branch":"Övrigt","Omrade":"Digitala Tjänster,IT-Service,Teknologi"},{"Aktie":"thyssenkrupp AG","Kortnamn":"TKAd","Marknad":"Equiduct","ISIN":"DE0007500001","Antal":"622531741","VD":"Miguel Ángel López Borrego","Ordf":"Siegfried Russwurm","PE":"−3,85","Branch":"Övrigt","Omrade":"Basmetaller,Metall & Gruvdrift,Råmaterial"},{"Aktie":"Dassault Aviation","Kortnamn":"Amp","Marknad":"Equiduct","ISIN":"FR0014004L86","Antal":"78951812","VD":"Eric Trappier","Ordf":"Eric Trappier","PE":"24,22","Branch":"Övrigt","Omrade":"Försvar,Industriella Varor & Tjänster,Industri"},{"Aktie":"IVECO GROUP","Kortnamn":"IVGm","Marknad":"Equiduct","ISIN":"NL0015000LU4","Antal":"271215400","VD":"Gerrit Marx","Ordf":"Suzanne Heywood","PE":"17,35","Branch":"Övrigt","Omrade":"Lastbilar & Tunga Fordon,Industriella Varor & Tjänster,Industri"},{"Aktie":"Orkla","Kortnamn":"ORK","Marknad":"OBX Top 25","ISIN":"NO0003733800","Antal":"1001430970","VD":"Nils Selte","Ordf":"Stein Erik Hagen","PE":"16,91","Branch":"Övrigt","Omrade":"Livsmedel,Mat & Dryck,Konsumentvaror & Tjänster"},{"Aktie":"Veidekke","Kortnamn":"VEI","Marknad":"OB Match","ISIN":"NO0005806802","Antal":"134956267","VD":"Jimmy Bengtsson","Ordf":"Egil Haugsdal","PE":"14,27","Branch":"Övrigt","Omrade":"Konstruktion,Bygg & Konstruktion,Industri"},{"Aktie":"Danske Bank","Kortnamn":"DANSKE","Marknad":"Large Cap Copenhagen","ISIN":"DK0010274414","Antal":"862184621","VD":"Carsten Egeriis","Ordf":"Martin Blessing","PE":"8,6","Branch":"Övrigt","Omrade":"Traditionell Bankverksamhet,Bank,Finans"},{"Aktie":"Fortum","Kortnamn":"FORTUM","Marknad":"Large Cap Helsinki","ISIN":"FI0009007132","Antal":"897264465","VD":"Markus Rauramo","Ordf":"Mikael Silvennoinen","PE":"11,75","Branch":"Övrigt","Omrade":"Främst förnyelsebar,Blandade,Energi"},{"Aktie":"Apple","Kortnamn":"AAPL","Marknad":"NASDAQ","ISIN":"US0378331005","Antal":"15022073000","VD":"Tim Cook","Ordf":"Arthur Levinson","PE":"37,22","Branch":"Övrigt","Omrade":"Hemelektronik,Hem & Bostad,Konsumentvaror & Tjänster"}]}
+</script>
+
+<!-- 
+ ===============================================================================================================================================
+-->
+
+<style type="text/css">
+	body,button,input {font-family: Verdana;font-size: 12px;}
+	div.content {	border: 1px dashed #b0b0b0;font-family: Consolas;font-size: 14px;}
+	input[type=text],select { width: 300px;font-family: Consolas;font-size: 14px;}
+  select {height:23px;width:307px;}
+	.content {padding: 16px;}
+	.content .Cell {padding-right: 5px;padding-left: 5px;}
+	.Title {display: table-caption;text-align: center;font-weight: bold;font-size: larger;}
+	.Heading {display: table-row;font-weight: bold;text-align: center;}
+	.Table {display: table;}
+	.Row {display: table-row;}
+	.Cell {display: table-cell;}
+	div.Cell:hover {cursor: pointer;}
+	.infoTxt {color: #0000ff;}
+  .blink { animation: blinkning 1.5s linear infinite;color: red;border:1px solid #ff0000;padding:10px;}
+  @keyframes blinkning {50% {opacity: 0;} }
+</style>
+
+<body>
+
+
+<h2>Aktielista</h2>
+
+<b>Sökvillkor</b>
+- <i>(Mellan alla villkor är det AND, textfält är sökningen CONTAINS)</i>
+<br /><br />
+
+<div id="search">
+
+  <!-- Tabell med div:ar -->
+	<div class="Table" style="width:1330px;">
+		<div class="Row">
+			<div class="Cell" style="width:40%;">  <!-- Cell 1 - Sökformuläret -->
+        <!-- Tabell med div:ar -->
+				<div class="Table" style="width:100%">
+					<div class="Row">
+						<div class="Cell" style="padding-bottom:8px;"><input type="checkbox" id="chkAkt" name="chkAkt" value="ON" />Aktie</div>
+						<div class="Cell"><input type="text" id="txtAkt" name="txtAkt" /></div>
+					</div>
+					<div class="Row">
+            <div class="Cell" style="padding-bottom:8px;"><input type="checkbox" id="chkKort" name="chkKort" value="ON" />Kortnamn</div>
+						<div class="Cell"><input type="text" id="txtKort" name="txtKort"></div>
+					</div>
+					<div class="Row">
+						<div class="Cell" style="padding-bottom:8px;"><input type="checkbox" id="chkMarknad" name="chkMarknad" value="ON" />Marknad</div>
+						<div class="Cell"><select id="cboMarknad" name="cboMarknad"><option value="NONE">Alla</Option></select></div>
+					</div>
+					<div class="Row">
+						<div class="Cell" style="padding-bottom:8px;"><input type="checkbox" id="chkISIN" name="chkISIN" value="ON" />ISIN</div>
+						<div class="Cell"><input type="text" id="txtISIN" name="txtISIN"></div>
+					</div>
+					<div class="Row">
+						<div class="Cell" style="padding-bottom:8px;"><input type="checkbox" id="chkAntal" name="chkAntal" value="ON" />Antal aktier</div>
+						<div class="Cell"><input type="text" id="txtAntal" name="txtAntal"></div>
+					</div>
+					<div class="Row">
+						<div class="Cell" style="padding-bottom:8px;"><input type="checkbox" id="chkVD" name="chkVD" value="ON" />VD</div>
+						<div class="Cell"><input type="text" id="txtVD" name="txtVD"></div>
+					</div>
+					<div class="Row">
+						<div class="Cell" style="padding-bottom:8px;"><input type="checkbox" id="chkOrdf" name="chkOrdf" value="ON" />Ordförande</div>
+						<div class="Cell"><input type="text" id="txtOrdf" name="txtOrdf"></div>
+					</div>
+					<div class="Row">
+						<div class="Cell" style="padding-bottom:8px;"><input type="checkbox" id="chkPE" name="chkPE" value="ON" />P/E</div>
+						<div class="Cell"><input type="text" id="txtPE" name="txtPE"></div>
+					</div>
+					<div class="Row">
+						<div class="Cell" style="padding-bottom:8px;"><input type="checkbox" id="chkBranch" name="chkBranch" value="ON" />Branch</div>
+						<div class="Cell"><select id="cboBranch" name="cboBranch"><option value="NONE">Alla</Option></select></div>
+					</div>
+					<div class="Row">
+						<div class="Cell" style="padding-bottom:8px;"><input type="checkbox" id="chkOmrade" name="chkOmrade" value="ON" />Omrade</div>
+						<div class="Cell"><select id="cboOmrade" name="cboOmrade"><option value="NONE">Alla</Option></select></div>
+					</div>
+					<div class="Row">
+						<div class="Cell">
+						</div>
+						<div class="Cell">
+							<button onclick="sok();" style="width:150px;">Sök</button>
+							<button onclick="nollstallSokmarkering();">Nollställ</button>
+              <button onclick="test();" id="test" name="test" style="display:none;background-color: #f44336;border-radius:8px;">Test</button>
+						</div>
+					</div> 
+				</div> <!-- Slut på tabell -->
+			</div>
+			<div class="Cell">  <!-- Cell 2 med info ifrån JSON-Strukturen -->
+        <!-- Tabell med div:ar -->
+				<div class="Table" style="font-family:consolas;font-size:14px;">
+					<div class="Row">
+						<div class="Cell" style="width:150px;">Aktie:</div>
+						<div class="Cell">
+							<div name="fld1" id="fld1" class="infoTxt"></div>
+						</div>
+					</div>
+					<div class="Row">
+						<div class="Cell">Kortnamn:</div>
+						<div class="Cell">
+							<div name="fld2" id="fld2" class="infoTxt"></div>
+						</div>
+					</div>
+					<div class="Row">
+						<div class="Cell">Marknad:</div>
+						<div class="Cell">
+							<div name="fld3" id="fld3" class="infoTxt"></div>
+						</div>
+					</div>
+					<div class="Row">
+						<div class="Cell">ISIN:</div>
+						<div class="Cell">
+							<div name="fld4" id="fld4" class="infoTxt"></div>
+						</div>
+					</div>
+					<div class="Row">
+						<div class="Cell">Antal</div>
+						<div class="Cell">
+							<div name="fld5" id="fld5" class="infoTxt"></div>
+						</div>
+					</div>
+					<div class="Row">
+						<div class="Cell">VD</div>
+						<div class="Cell">
+							<div name="fld6" id="fld6" class="infoTxt"></div>
+						</div>
+					</div>
+					<div class="Row">
+						<div class="Cell">Ordförande</div>
+						<div class="Cell">
+							<div name="fld6" id="fld7" class="infoTxt"></div>
+						</div>
+					</div>
+					<div class="Row">
+						<div class="Cell">P/  E</div>
+						<div class="Cell">
+							<div name="fld7" id="fld8" class="infoTxt"></div>
+						</div>
+					</div>
+					<div class="Row">
+						<div class="Cell">Branch</div>
+						<div class="Cell">
+							<div name="fld8" id="fld9" class="infoTxt"></div>
+						</div>
+					</div>
+					<div class="Row">
+						<div class="Cell">Område</div>
+						<div class="Cell">
+							<div name="fld9" id="fld10" class="infoTxt"></div>
+						</div>
+					</div>
+				</div> <!-- // Tabell slut -->
+			</div>
+		</div> <!-- // Rad slut -->
+	</div> <!-- // Tabell slut -->
+</div> <!-- // Div - sök  -->
+
+<br/>
+<div id="traffbild" style="width:1300px;padding:5px;font-weight:italic;color:#0000ff">0 träffar</div>
+<br/>
+
+<!-- =====[ Yta för information ]==== -->
+<div class="content" id="contentarea" name="contentarea" style="overflow:scroll;height:800px;width:1300px;"></div>
+
+	<!-- =====[ Skript för att hantera trädet ]==== -->
+	<script>
+
+/*
+    window.onerror = function (errorMsg, url, lineNumber) {
+        alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
+    }
+*/    
+		// ====[ Variabeldeklarationer ]====
+		const MAX_LINE = 50;         // Längden på beskrivningarna innan dom kortas
+		var debug = false;		       // Debug loggning till webbläsarens konsol
+    var debugButton = false;    // Knapp för att testa nya funktioner
+		var content = "";
+		var radnr = 0;
+		var lank = "";
+    
+    // ====[ Checkboxar id/namn ]====
+    var check = new Array("chkAkt","chkKort","chkMarknad","chkISIN","chkAntal","chkVD","chkOrdf","chkPE","chkBranch","chkOmrade");
+    // ====[ Typ av data - inmatningsfältens namn ]====
+    var valueType = new Array("txtAkt","txtKort","cboMarknad","txtISIN","txtAntal","txtVD","txtOrdf","txtPE","cboBranch","cboOmrade");
+    // ====[ Ovanståendes motsvarighet i JSON-strukturen - mappning fältnamn mot fältnamn ]====
+    var JSONValue = new Array("Aktie","Kortnamn","Marknad","ISIN","Antal","VD","Ordf","PE","Branch","Omrade#");
+    
+    // ====[ Kollera om debugläge är på ]====
+    if(debugButton==true) {
+      document.getElementById('test').style.display="";
+    } else {
+      document.getElementById('test').style.display="none";
+    }
+    
+		var arrMarknad = new Array();
+		var arrBrancher = new Array();
+		var arrOmrade = new Array();
+		var arrRiktn = new Array();
+		var arrTransp = new Array();
+
+		var d = Number(new Date().toISOString().slice(0, 10).replace(/-/g, ""));  // Dagens datum som ett tal för att kunna jämföra
+		var x = JSON.parse(document.getElementById('integrationsdata').innerHTML);
+
+
+		document.getElementById("contentarea").style.height = (window.innerHeight - 500) + "px";
+
+		var strBaseURL = "https://www.demo.se";
+
+		if (debug) console.log("Antal element i JSON " + x.Aktielista.length);
+		initiera();
+
+		// ==========================================================
+		//                    Initiera
+		// ==========================================================
+		function initiera() {
+
+			if (debug) console.log("initiera()");
+			
+			samlaInfo();
+			fyllpaFormular();
+			
+			document.getElementById("contentarea").innerHTML = "";
+
+			var info = document.getElementById("contentarea");
+
+			// ====[ Början på tabellen ]====
+			info.insertAdjacentHTML("beforeend", "<div class=\"Table\">");
+
+			content = "";
+			radnr = 0;
+      
+      var hits = 0;
+
+			// ====[ Bygg upp trädet genom att loopa igenom JSON-koden ]====
+			for (var i = 0; i < x.Aktielista.length; i++) {
+
+				radnr++;
+				content = "";
+        hits++;
+        
+				// ====[ Skriv ut raden ]====
+				if (radnr % 2) {
+					content += "<div class=\"Row\" style=\"background-color:#f0f0f0;padding-top:5px;\" onmouseover=\"visaInfo(" + i + ");\" onmouseout=\"resetInfo(" + i + ");\">";
+				} else {
+					content += "<div class=\"Row\" style=\"padding-top:5px;\" onmouseover=\"visaInfo(" + i + ");\" onmouseout=\"resetInfo(" + i + ");\">";
+				}
+
+				content += "<div class=\"Cell\" title=\""+ "Radnr "+radnr + " - " + x.Aktielista[i].Aktie + " - " + x.Aktielista[i].Marknad + "\">";
+        
+				content += "</div>";
+        content += "<div class=\"Cell\">" + hits + ". </div>";
+				content += "<div class=\"Cell\"><b>" + x.Aktielista[i].Aktie + "</b></div>";
+				content += "<div class=\"Cell\">" + x.Aktielista[i].Marknad + "</div>";
+				content += "<div class=\"Cell\">" + x.Aktielista[i].ISIN + "</div>";
+				content += "<div class=\"Cell\">" + x.Aktielista[i].Branch + "</div>";
+
+				content += "</div>";
+				info.insertAdjacentHTML("beforeend", content);
+			}
+
+			info.insertAdjacentHTML("beforeend", "</div>");
+
+			var traffbild = document.getElementById("traffbild");
+			traffbild.innerHTML = "Träffbild " + radnr + " st";
+
+		}
+
+		// ==========================================================
+		//              Nollställ info
+		// ==========================================================
+		function resetInfo() {
+			
+			// ====[ Loopa igenom fälten och töm på information ]====
+			for (var i = 1; i < 11; i++) {
+				document.getElementById("fld" + i).innerHTML = "";
+			}
+		}
+
+		// ==========================================================
+		//              Fyll med fältinfo
+		// ==========================================================
+		function visaInfo(id) {
+
+			var radLangd = 80;
+			var faltLista = new Array("Aktie", "Kortnamn", "Marknad", "ISIN", "Antal", "VD", "Ordf", "PE", "Branch", "Omrade");
+
+			// ====[ Loopa igenom fälten och fyll med information ]====
+			for (var i = 1; i < faltLista.length+1; i++) {
+				varde = eval("x.Aktielista[" + id + "]." + faltLista[i - 1]);
+				// ====[ Korta av raden om den är för lång ]====
+				if(varde.length>radLangd) {
+					varde = varde.substr(1,radLangd,varde)+"..";
+				}
+				document.getElementById("fld" + i).innerHTML = varde;
+			}
+
+		}
+
+		// ===============================================================
+		//  Testknapp - för att kunna testa saker under utveckling
+		// ===============================================================
+    function test() {
+      
+
+    }
+    
+		// ==========================================================
+		//              Samla ihop myndigheterna
+		// ==========================================================
+		function samlaInfo() {
+
+			if (debug) console.log("samlaInfo()");
+			
+			arrMarknad = new Array();
+			arrBrancher = new Array();
+			arrOmrade = new Array();
+
+			var intMyn = 0;
+			var intProd = 0;
+			var intSys = 0;
+			var intRik = 0;
+			var intTrp = 0;
+
+			// =====[ Loopa igenom listan och plocka fram unika värden ]====
+			for (var i = 0; i < x.Aktielista.length; i++) {
+
+				// ====[ Samla unika poster av myndigheter ]====
+				if (arrMarknad.indexOf(x.Aktielista[i].Marknad.trim()) == -1) {
+					arrMarknad[intMyn++] = x.Aktielista[i].Marknad.trim();
+				}
+				
+				// ====[ Samla unika poster av produkttyper ]====
+				if (arrBrancher.indexOf(x.Aktielista[i].Branch.trim()) == -1) {
+					arrBrancher[intProd++] = x.Aktielista[i].Branch.trim();
+				}
+
+				var dela = x.Aktielista[i].Omrade.split(",");
+
+				// ====[ Kontrollera så att det finns några värden ]====
+				if(dela.length>0) {
+
+					// ====[ Samla unika poster av systemomården ]====
+					if (arrOmrade.indexOf(dela[0]) == -1) {
+						arrOmrade[intSys++] = dela[0];
+					}
+
+					// ====[ Samla unika poster av riktning ]====
+					if (arrRiktn.indexOf(dela[1]) == -1) {
+						arrRiktn[intRik++] = dela[1];
+					}
+
+					// ====[ Samla unika poster av typ av transport ]====
+					if (arrTransp.indexOf(dela[2]) == -1) {
+						arrTransp[intTrp++] = dela[2];
+					}
+				}
+			}
+
+      // ====[ Sortera arrayerna ]====
+			arrMarknad = arrMarknad.sort();
+			arrBrancher = arrBrancher.sort();
+			arrOmrade = arrOmrade.sort();
+		}
+		
+		// ==========================================================
+		//              Fyll på info i comboboxen
+		// ==========================================================
+		function fyllpaFormular() {
+
+			if (debug) console.log("fyllpaFormular()");
+			
+			// ====[ Myndigheter ]====
+			var m = document.getElementById("cboMarknad");
+
+			rensaOptions(m);
+
+			// ====[ Lägg till standardvärde ]====
+			var option = document.createElement("option");
+			option.text = "------======[ Alla val ]======------";
+			option.value = "NONE";
+			m.add(option);
+
+			// =====[ Fyll på i formuläret ]=====
+			for(var i=0; i< arrMarknad.length;i++) {
+				var option = document.createElement("option");
+				option.text = arrMarknad[i];
+				option.value = arrMarknad[i];
+				m.add(option);
+			}
+
+			// ====[ Produkttyper ]====
+			var m = document.getElementById("cboBranch");
+			
+			rensaOptions(m);
+
+			// ====[ Lägg till standardvärde ]====
+			var option = document.createElement("option");
+			option.text = "------======[ Alla val ]======------";
+			option.value = "NONE";
+			m.add(option);
+
+			// =====[ Fyll på i formuläret ]=====
+			for(var i=0; i< arrBrancher.length;i++) {
+				var option = document.createElement("option");
+				option.text = arrBrancher[i];
+				option.value = arrBrancher[i];
+				m.add(option);
+			}
+
+			// ====[ Systemområde ]====
+			var m = document.getElementById("cboOmrade");
+			
+			rensaOptions(m);
+
+			// ====[ Lägg till standardvärde ]====
+			var option = document.createElement("option");
+			option.text = "------======[ Alla val ]======------";
+			option.value = "NONE";
+			m.add(option);
+
+			// =====[ Fyll på i formuläret ]=====
+			for(var i=0; i< arrOmrade.length;i++) {
+				var option = document.createElement("option");
+				option.text = arrOmrade[i];
+				option.value = arrOmrade[i];
+				m.add(option);
+			}
+
+			
+		}
+
+		// ==========================================================
+		//          Nollställ sökmarkeringen
+		// ==========================================================
+		function nollstallSokmarkering() {
+			initiera();
+      // ====[ Nollställ checkboxarna ]====
+      for(var i=0;i<check.length;i++) {
+        document.getElementById(check[i]).checked = false;
+      }
+      
+		}
+
+		// ==========================================================
+		//          Rensa combobox
+		// ==========================================================
+		function rensaOptions(valElement) {
+			var i, L = valElement.options.length - 1;
+			for(i = L; i >= 0; i--) {
+				valElement.remove(i);
+		   }
+		}
+
+		// ==========================================================
+		//                  S Ö K N I N G E N 
+		// ==========================================================
+		function sok() {
+
+      var checked = false;
+      var strSearch = "";
+      
+      // ====[ Loopa igenom värdena och bygg upp en söksträng ]====
+      for(var i=0;i<valueType.length;i++) {
+
+        // ====[ Kontrollera om villkoret skall användas ]====
+        if(document.getElementById(check[i]).checked) {
+
+          // ====[ Bygg sökvillkor utifrån formulär och olika fälttyper ]====
+          switch(valueType[i].substr(0,3)) {
+
+            // ======================================================
+            //                K O M B O B O X
+            // ======================================================
+            case "cbo":
+              
+              // ====[ Värdet ]====
+              var v = document.getElementById(valueType[i]).value
+              
+              // ====[ Kontrollera så att något är valt i comboboxen ]====
+              if(v!="NONE") {
+                
+                // ====[ Om det finns fler villkor i söksträngen ]====
+                if(strSearch.length>0) {
+                  strSearch += " && ";
+                }
+                
+                // ====[ Plocka ut rätt fält ]
+                if(JSONValue[i].indexOf("#")>0) {
+                  spl = JSONValue[i].split("#");
+                  
+                  strSearch += "(x.Aktielista[i]."+spl[0]+".toUpperCase().search(\""+v.toUpperCase()+"\")!=-1)";
+                } else {
+                  strSearch += "(x.Aktielista[i]."+JSONValue[i]+".toUpperCase()==\""+v.toUpperCase()+"\")";
+                }
+
+                checked = true;
+              } else {
+                 
+                 // ====[ Ett fält har ingen information vald ]====
+                 document.getElementById("traffbild").innerHTML = "<b><span class=\"blink\"> \> \> \> \> \> \> E T T &#160;&#160;&#160;F Ä L T&#160;&#160;&#160;Ä R&#160;&#160;&#160;I N T E&#160;&#160;&#160;V A L T ! ! ! ! ! \< \< \< \< \< \<</span></b>";
+
+                 if(debug==true)
+                     console.log("Hoppar över combobox '"+valueType[i]+"' saknar värde");
+
+                 return;
+              } // if(v!="NONE"....
+              
+              break;
+              
+            // ======================================================
+            //                T E X T S T R Ä N G
+            // ======================================================
+            case "txt":
+
+              // ====[ Värdet ]====
+              var v = document.getElementById(valueType[i]).value
+              
+              // ====[ Om det finns fler villkor i söksträngen ]====
+              if(strSearch.length>0) {
+                strSearch += " && ";
+              }
+              
+              // ====[ Kontrollera så att någonting är valt ]====
+              if(v.trim()=="") {
+                if(debug==true)
+                  console.log("Hoppar över textfält '"+valueType[i]+"' saknar värde");
+
+                  document.getElementById("traffbild").innerHTML = "<b><span class=\"blink\"> \> \> \> \> \> \> E T T &#160;&#160;&#160;F Ä L T&#160;&#160;&#160;S A K N A R&#160;&#160;&#160;I N F O R M A T I O N ! ! ! ! ! \< \< \< \< \< \<</span></b>";
+                  return;
+              }
+              
+              // ====[ Bygg söksträngen ]====
+              strSearch += "(x.Aktielista[i]."+JSONValue[i]+".toUpperCase().search(\""+v.toUpperCase()+"\")!=-1)";
+            
+              checked = true;
+              break;
+            default:
+          }
+        }
+      }
+
+      if(debug==true)
+        console.log("SEARCH="+strSearch);
+      
+      // ====[ Finns inga sökvillkor, hoppa ur ]====
+      if(checked == false) {
+        document.getElementById("traffbild").innerHTML = "<b><span class=\"blink\"> \> \> \> \> \> \> I N G A&#160;&#160;&#160;F Ä L T&#160;&#160;&#160;Ä R&#160;&#160;&#160;V A L D A ! ! ! ! ! \< \< \< \< \< \<</span></b>";
+        return;      
+       }
+      
+			document.getElementById("contentarea").innerHTML = "";
+			var info = document.getElementById("contentarea");
+
+			var hits = 0;
+			var radnr = 0;
+
+			// ====[ Början på tabellen ]====
+			info.insertAdjacentHTML("beforeend", "<div class=\"Table\">");
+
+			// ====[ Gå igenom trädet och matcha ]====
+			for (var i = 0; i < x.Aktielista.length; i++) {
+
+				radnr++;
+
+				// ====[ Kontrollera om det var en sökträff ]====
+				if (eval(strSearch)==true) {
+
+					content = "";
+					hits++;
+
+          // ====[ Skriv ut raden ]====
+          if (radnr % 2) {
+            content += "<div class=\"Row\" style=\"background-color:#f0f0f0;padding-top:5px;\" onmouseover=\"visaInfo(" + i + ");\" onmouseout=\"resetInfo(" + i + ");\">";
+          } else {
+            content += "<div class=\"Row\" style=\"padding-top:5px;\" onmouseover=\"visaInfo(" + i + ");\" onmouseout=\"resetInfo(" + i + ");\">";
+          }
+
+          content += "<div class=\"Cell\" title=\""+ "Radnr "+radnr + " - " + x.Aktielista[i].Aktie + " - " + x.Aktielista[i].Marknad + "\">";
+          
+          content += "</div>";
+          content += "<div class=\"Cell\">" + hits + ". </div>";
+          content += "<div class=\"Cell\"><b>" + x.Aktielista[i].Aktie + "</b></div>";
+          content += "<div class=\"Cell\">" + x.Aktielista[i].Marknad + "</div>";
+          content += "<div class=\"Cell\">" + x.Aktielista[i].ISIN + "</div>";
+          content += "<div class=\"Cell\">" + x.Aktielista[i].Branch + "</div>";
+
+          content += "</div>";
+
+					info.insertAdjacentHTML("beforeend", content);
+
+				}  // Slutet på if(eval(strSearch)..
+			} // for(var...
+
+			var traffbild = document.getElementById("traffbild");
+
+			// ====[ Kontrollera så att elementet träffbild finns ]====
+			if (typeof (traffbild) != 'undefined' && traffbild != null) {
+				traffbild.innerHTML = "Träffbild " + hits + " st";
+        
+        if(debug==true) {
+          traffbild.innerHTML = hits + " träffar<br/><span style=\"font-size:10px;color:#a0a0a0;\">"+strSearch+"</span>";
+        } else {
+          traffbild.innerHTML = hits + " träffar";
+        }
+			}
+
+			if (debug) console.log("Antal träffar " + hits + " st");
+		}
+
+	</script>
+</body>
+</html>
