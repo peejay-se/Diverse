@@ -25,8 +25,9 @@ OM(VÄNSTER(N5;1)="]";"}";"},")
 Sista raden med logik formeln __OM__ är till för att kontrollera om det finns ytterligare data på nästa rad.
 Annars avsluta strukturen.
 
-Nedan visar var i filen som man lägger in koden. Man bör ha något program som kan "komprimera" JSON-koden och 
-lägga den på en rad (exempelvis via Notepad++ och JSTool-plugin)
+Nedan visar var i filen som man lägger in den skapade JSON-koden. Man bör ha något program som kan "komprimera" JSON-koden och 
+lägga den på en rad (exempelvis via Notepad++ och JSTool-plugin). Helst hade man viljat haft JSON-koden i en separat fil och inkluderat
+den. Men det räknas som ett säkerhetshot och stoppar filen. Lägger man in den manuellt så gör man ett aktivt val.
 
 ![HTML-kod](img/htmlkod_700x303.png)
 
@@ -53,3 +54,8 @@ JSON-strukturen som används
   ]
 }
 ```
+
+Exempel på en sökning
+
+![Webbläsare](img/exempelsokning674x470.png)
+
