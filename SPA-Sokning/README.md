@@ -1,4 +1,4 @@
-##SPA-Sökning (Single Page Application)
+## SPA-Sökning (Single Page Application)
 
 ![Excel](img/excel_700x379.png)
 
