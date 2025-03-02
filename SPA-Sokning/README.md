@@ -16,7 +16,7 @@ en AND mellan villkoren och fritext rutorna gör en sökning via CONTAINS
 ![Webbläsare](img/webblasare_700x603.png)
 
 JSON-strukturen som används
-'''
+```
 {
   "Aktielista": [{
       "Aktie": "ABB",
@@ -32,4 +32,4 @@ JSON-strukturen som används
     }
   ]
 }
-'''
+```
