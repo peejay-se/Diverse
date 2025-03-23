@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <title>--==[ REST Klient ]==--</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+</head>
+
+<!--
+	 ===============================================================================================================================================
+			                                                R E S T K L I E N T
+	 ===============================================================================================================================================
+					 Skapad av : Peter Jonsson
+					 Version   : 1.0
+					 Datum     : 2025-03-23
+					 Revision  : xxxx-xx-xx v x.xx
+	 ===============================================================================================================================================
+					
+	 ===============================================================================================================================================
+     Detta är en SPA-applikation (Single Page Application)
+
+	 ===============================================================================================================================================
+
+	 ===============================================================================================================================================
+ -->
+<script id="konfiguration" type="application/json">
+{"Konfiguration":{"HTTPMetoder":["CONNECT","DELETE","GET","HEAD","OPTIONS","PATCH","POST","PUT","TRACE"],"HTTP":"xxxx"}}
+</script>
+
+
+<!-- 
+ ===============================================================================================================================================
+-->
+
+<style type="text/css">
+    body,
+    button,
+    input,
+    select {
+        font-family: Consolas, Verdana;
+        font-size: 12px;
+    }
+
+    div.content {
+        border: 1px dashed #b0b0b0;
+        font-family: Consolas;
+        font-size: 14px;
+    }
+
+    input[type=text],
+    textarea,
+    select {
+        width: 350px;
+        font-family: Consolas;
+        font-size: 13px;
+    }
+
+    .Title {
+        display: table-caption;
+        text-align: center;
+        font-weight: bold;
+        font-size: larger;
+    }
+
+    .Heading {
+        display: table-row;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .Table {
+        display: table;
+    }
+
+    .Row {
+        display: table-row;
+    }
+
+    .Cell {
+        display: table-cell;
+        padding:4px;
+    }
+</style>
+
+<body>
+
+
+    <img alt="logo" style="width:100px;color:#e0e0e0;" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTQ1OCA0ODkiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgeG1sbnM6c2VyaWY9Imh0dHA6Ly93d3cuc2VyaWYuY29tLyIgc3R5bGU9ImZpbGwtcnVsZTpldmVub2RkO2NsaXAtcnVsZTpldmVub2RkO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoyOyI+PGcgdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsMSwtMjA1LjMyMywtMTQ3LjI5MykiPjxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsLTQ1Ny44ODEsLTU0Ny4wODYpIj48cGF0aCBkPSJNMTcwMC43NiwxMTgzLjI2QzE2NzcuMzUsMTE4My4yNiA5NDIuNzMyLDExNzYuMzggOTQyLjczMiwxMTc2LjM4TDg2My41NDYsMTAzMS43OEw3ODcuMTQ2LDEwMzEuNzhMNzg3LjE0NiwxMTc2LjM4TDY2My4yMDQsMTE3Ni4zOEw2NjMuMjA0LDY5NC4zNzlMOTMyLjQwMyw2OTQuMzc5Qzk4MC42MDMsNjk0LjM3OSAxMDE1LjYxLDcwNS4yODIgMTAzNy40MSw3MjcuMDg2QzEwNTkuMjEsNzQ4Ljg5MSAxMDcwLjEyLDc4My44OTMgMTA3MC4xMiw4MzIuMDkzTDEwNzAuMTIsODk0LjA2NEMxMDcwLjEyLDkzMi4xNjUgMTA2My44MSw5NjEuNzc0IDEwNTEuMTgsOTgyLjg5QzEwMzguNTYsMTAwNC4wMSAxMDE4LjQ3LDEwMTguMDEgOTkwLjkzMiwxMDI0Ljg5TDEwMjIuMjMsMTA3OS45OEwxMDg1Ljk3LDEwNzkuOThMMTA4NS45Nyw2OTQuMzc5TDE0MzMuMTMsNjk0LjM3OUwxNDMzLjEzLDc5MC43NzlMMTIwOS45Miw3OTAuNzc5TDEyMDkuOTIsODgzLjczNkwxMzc4LjA1LDg4My43MzZMMTM3OC4wNSw5ODAuMTM2TDEyMDkuOTIsOTgwLjEzNkwxMjA5LjkyLDEwNzkuOThDMTIwOS45MiwxMDc5Ljk4IDE2MjguOSwxMDg2Ljg2IDE2NzMuMjIsMTA4Ni44NkMxNjgzLjc3LDEwODYuODYgMTY5Mi4xNSwxMDgzLjc3IDE2OTguMzUsMTA3Ny41N0MxNzA0LjU1LDEwNzEuMzcgMTcwNy42NCwxMDYyLjk5IDE3MDcuNjQsMTA1Mi40M0wxNzA3LjY0LDk5MC40NjRMMTU4NS4yNyw5OTAuNDY0QzE1MzcuMDcsOTkwLjQ2NCAxNTAyLjA3LDk3OS41NjIgMTQ4MC4yNyw5NTcuNzU3QzE0NTguNDYsOTM1Ljk1MiAxNDQ3LjU2LDkwMC45NSAxNDQ3LjU2LDg1Mi43NUwxNDQ3LjU2LDgzMi4wOTNDMTQ0Ny41Niw3ODMuODkzIDE0NTguNDYsNzQ4Ljg5MSAxNDgwLjI3LDcyNy4wODZDMTUwMi4wNyw3MDUuMjgyIDE1MzcuMDcsNjk0LjM3OSAxNTg1LjI3LDY5NC4zNzlMMjEyMC44NCw2OTQuMzc5TDIxMjAuODQsNzkwLjc3OUwxOTgzLjI0LDc5MC43NzlMMTk4My4yNCwxMTc2LjM4TDE4NTkuMywxMTc2LjM4TDE4NTkuMyw3OTAuNzc5TDE2MTIuODIsNzkwLjc3OUMxNTg1LjI3LDc5MC43NzkgMTU3MS41LDgwNC41NSAxNTcxLjUsODMyLjA5M0wxNTcxLjUsODQ1Ljg2NUMxNTcxLjUsODczLjQwNyAxNTg1LjI3LDg4Ny4xNzkgMTYxMi44Miw4ODcuMTc5TDE3MDAuNzYsODg3LjE3OUMxNzQ1Ljc1LDg4Ny4xNzkgMTc3OC44LDg5Ny43MzcgMTc5OS45MSw5MTguODUzQzE4MjEuMDMsOTM5Ljk2OSAxODMxLjU5LDk3My4wMiAxODMxLjU5LDEwMTguMDFMMTgzMS41OSwxMDUyLjQzQzE4MzEuNTksMTA5Ny40MiAxODIxLjAzLDExMzAuNDcgMTc5OS45MSwxMTUxLjU5QzE3NzguOCwxMTcyLjcxIDE3NDUuNzUsMTE4My4yNiAxNzAwLjc2LDExODMuMjZaTTk0Ni4xNzUsODMyLjA5M0M5NDYuMTc1LDgwNC41NSA5MzIuNDAzLDc5MC43NzkgOTA0Ljg2LDc5MC43NzlMNzg3LjE0Niw3OTAuNzc5TDc4Ny4xNDYsOTM1LjM3OUw5MDQuODYsOTM1LjM3OUM5MzIuNDAzLDkzNS4zNzkgOTQ2LjE3NSw5MjEuNjA3IDk0Ni4xNzUsODk0LjA2NEw5NDYuMTc1LDgzMi4wOTNaIi8+PC9nPjwvZz48L3N2Zz4" />
+
+    <br />
+    <br />
+
+    <div id="formular">
+        <!-- Tabell med div:ar -->
+        <div class="Table" style="width:1330px;">
+            <div class="Row">
+                <div class="Cell" style="width:40%;"> <!-- Cell 1 - Sökformuläret -->
+                    <!-- Tabell med div:ar -->
+                    <div class="Table" style="border:1px solid #e0e0e0;">
+
+                        <div class="Row">
+                            <div class="Cell" style="">HTTP Metod</div>
+                            <div class="Cell"><select id="cboHTTP" name="cboHTTP">
+                                    <option value="NONE">====[ Alla ]====</Option>
+                                    <option value="GET" selected="selected">GET</Option>
+                                    <option value="PATCH">PATCH</Option>
+                                    <option value="POST">POST</Option>
+                                    <option value="PUT">PUT</Option>
+                                    <option value="DELETE">DELETE</Option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="Row">
+                            <div class="Cell">Basadress</div>
+                            <div class="Cell"><input type="text" id="txtBas" name="txtBas" value="http://127.0.0.1"/></div>
+                        </div>
+                        <div class="Row">
+                            <div class="Cell">Endpunkt</div>
+                            <div class="Cell"><input type="text" id="txtEndpunkt" name="txtEndpunkt" value="/api"></div>
+                        </div>
+                        <div class="Row">
+                            <div class="Cell">Innehåll</div>
+                            <div class="Cell"><textarea id="body" name="body" rows="4" cols="32"></textarea></div>
+                        </div>
+                        <div class="Row">
+                            <div class="Cell">Utdata</div>
+                            <div class="Cell"><textarea id="output" name="output" rows="14" cols="32"></textarea></div>
+                        </div>
+                        <div class="Row">
+                            <div class="Cell">
+                            </div>
+                            <div class="Cell">
+                                <button onclick="ExekveraAnrop();" style="width:150px;">Sök</button>
+                                <button onclick="Nollstall();">Nollställ</button>
+                            </div>
+                        </div>
+                    </div> <!-- Slut på tabell -->
+                </div>
+            </div> 
+        </div> <!-- // Tabell slut -->
+    </div> <!-- // Div - formulär  -->
+
+    <div>F O R M U L Ä R E T&#160;&#160;&#160;F U N G E R A R&#160;&#160;&#160;I N T E  !&#160;&#160;&#160;-&#160;&#160;&#160;H Å R D K O D A T</div>
+    <br />
+    <div id="traffbild" style="width:1300px;padding:5px;font-weight:italic;color:#0000ff">0 träff/träffar</div>
+    <br />
+
+    <!-- =====[ Yta för information ]==== -->
+    <div class="content" id="contentarea" name="contentarea" style="overflow:scroll;height:350px;width:1000px;"></div>
+
+    <!-- =====[ Skript för att hantera trädet ]==== -->
+    <script>
+
+        // script.js
+
+        // ====[ Läs in konfiuration ]====
+        var k = JSON.parse(document.getElementById('konfiguration').innerHTML);
+        console.log(k.Konfiguration.HTTPMetoder.length);
+
+        var traffBild = document.getElementById('traffbild');
+        var utData = document.getElementById('contentarea');
+
+
+        // ========================================================================
+        //                  J A V A S C R I P T   K L A S S
+        // ========================================================================
+        class HttpClient {
+        
+          // ========================================================================
+          //                     K O N S T R U K T O R
+          // ========================================================================
+          constructor(baseURL = "", defaultHeaders = {}, timeout = 5000) {
+            this.baseURL = baseURL;
+            this.defaultHeaders = defaultHeaders;
+            this.timeout = timeout; // Timeout i millisekunder
+          }
+
+          // ========================================================================
+          //                           R E Q U E S T
+          // ========================================================================
+          async request(endpoint, method = "GET", body = null, headers = {}) {
+          
+            traffBild.textContent = "Laddar.....";
+            
+            const url = `${this.baseURL}${endpoint}`;
+            const mergedHeaders = { ...this.defaultHeaders, ...headers };
+
+            const options = {
+              method,
+              headers: mergedHeaders,
+            };
+
+            // ====[ Kontrollera om det finns en body ]====
+            if (body) {
+              options.body = JSON.stringify(body);
+            }
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+            options.signal = controller.signal;
+
+            try {
+              const response = await fetch(url, options);
+              clearTimeout(timeoutId);
+
+              if (!response.ok) {
+                traffBild.textContent = `HTTP-fel! status: ${response.status} - ${response.statusText}`;
+                throw new Error(`HTTP-fel! status: ${response.status} - ${response.statusText}`);
+              }
+
+              traffBild.textContent = "Klar.....";
+              return await response.json();
+              
+            } catch (error) {
+              if (error.name === "AbortError") {
+                console.error("Förfrågan avbröts på grund av timeout.");
+                traffBild.textContent = "Förfrågan avbröts på grund av timeout." + error;
+              } else {
+                console.error("Fel vid HTTP-förfrågan:", error);
+                traffBild.textContent = "Fel vid HTTP-förfrågan:" + error;
+              }
+              throw error;
+            }
+          }
+
+          // ========================================================================
+          //                   H T T P - M E T O D :   G E T 
+          // ========================================================================
+          async get(endpoint, headers = {}) {
+            return this.request(endpoint, "GET", null, headers);
+          }
+
+          // ========================================================================
+          //                   H T T P - M E T O D :   P O S T
+          // ========================================================================
+          async post(endpoint, body, headers = {}) {
+            return this.request(endpoint, "POST", body, headers);
+          }
+
+          // ========================================================================
+          //                   H T T P - M E T O D :   P U T
+          // ========================================================================
+          async put(endpoint, body, headers = {}) {
+            return this.request(endpoint, "PUT", body, headers);
+          }
+
+          // ========================================================================
+          //                 H T T P - M E T O D :   D E L E T E
+          // ========================================================================
+          async delete(endpoint, headers = {}) {
+            return this.request(endpoint, "DELETE", null, headers);
+          }
+
+          // ========================================================================
+          //                 H T T P - M E T O D :   P A T C H
+          // ========================================================================
+          async patch(endpoint, body, headers = {}) {
+            return this.request(endpoint, "PATCH", body, headers);
+          }
+        }
+
+// =============================================================================================================================
+
+      // ========================================================================
+      //       
+      // ========================================================================
+      function ExekveraAnrop() {
+
+            (async () => {
+              const client = new HttpClient(
+                "http://127.0.0.1:8080",
+                {  }, 
+                10000 // Timeout på 10 sekunder
+              );
+
+              try {
+                // GET förfrågan
+                const posts = await client.get("/api");
+                console.log("Hämtade inlägg:", posts);
+                utData.textContent = "Hämtade inlägg:"+JSON.stringify(posts);
+                
+              } catch (error) {
+                console.error("Ett fel uppstod:", error);
+                utData.textContent = "Ett fel uppstod:"+error;
+              }
+            })();
+
+      }
+
+      // ========================================================================
+      //       
+      // ========================================================================
+      function Nollstall() {
+        traffBild.textContent = "";
+        utData.textContent = "";
+      }
+
+/*
+      Blir problem om APIerna inte returnerar dessa parametrar
+
+      sec-fetch-mode:"cors"
+      sec-fetch-site:"cross-site"
+
+      CORS (Cross-Origin Resource Sharing) är en säkerhetsfunktion implementerad i webbläsare för att skydda användare 
+      från potentiellt skadliga förfrågningar mellan olika ursprung (t.ex. mellan olika domäner). Det är designat för 
+      att skydda data och användares integritet, och det går inte att "slå av" CORS i webbläsaren på klientsidan i en 
+      produktionsmiljö.
+
+      Starta webbläsaren utan CORS (inte rekommenderat för produktion)
+      Det går att starta en webbläsare i ett läge som kringgår CORS, men detta är endast för testning och inte för slutanvändare.
+
+      Exempelvis i Chrome:
+      chrome.exe --disable-web-security --user-data-dir="C:\chrome_dev"
+*/
+
+
+    </script>
+</body>
+
+</html>
