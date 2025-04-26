@@ -22,7 +22,6 @@
 #   sista siffrorna är 0 visas de inte. Det kan också visas fler decimaler för vissa valutor med lågt värde. 
 #   Tal mindre än 1 visas med 1 till 4 värdesiffror, dock högst 6 decimaler, t.ex. 0,000012. 
 #  =====================================================================================================
-
 #    Revisionshistorik
 #  =====================================================================================================
 
