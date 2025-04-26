@@ -6,6 +6,22 @@
 #    Skapad:   2025-04-27
 #    Filnamn:  riksbanken_ext.sh
 #  =====================================================================================================
+#   När publiceras valutakurserna?
+#   Nya noteringar för valutakurserna publiceras varje svensk bankdag kl. 16.15. 
+#   Månadsgenomsnitt för valutakurser finns tillgängliga sista bankdagen i varje månad och årsgenomsnitt 
+#   för valutakurser finns tillgängliga sista bankdagen varje år, kl. 16.15.
+#
+#   Annars får man HTTP Status 204 => No content
+#
+#   Vilka valutakurser publicerar Riksbanken?
+#   Riksbanken publicerar samma valutakurser som ECB publicerar.
+#
+#   Hur många decimaler har ränte- och valutanoteringarna?
+#   I de flesta fall publiceras ränte- och valutakursnoteringarna med 5 decimalers precision, 
+#   enligt principen 1,23456. Antalet decimaler kan dock variera. Det kan vara färre decimaler, om de 
+#   sista siffrorna är 0 visas de inte. Det kan också visas fler decimaler för vissa valutor med lågt värde. 
+#   Tal mindre än 1 visas med 1 till 4 värdesiffror, dock högst 6 decimaler, t.ex. 0,000012. 
+#  =====================================================================================================
 #    Revisionshistorik
 #  =====================================================================================================
 
