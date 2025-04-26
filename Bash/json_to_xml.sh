@@ -63,7 +63,7 @@ done
 # ====[ Skriv ut slutet av filen ]====
 echo "</valutakurser>" >> "$filnamn_ut"
 
-# Kontrollera resultat
+# ====[ Kontrollera resultat ]====
 if [ $? -eq 0 ]; then
     echo "XML-filen har skapats - $filnamn_ut"
 else
