@@ -7,7 +7,7 @@ Hämta valutakurser ifrån Riksbankens öppna API
 | riksbanken.sh | Hämtar alla Riksbankens valutor, även sådana som inte uppdaterar  |
 | riksbanken_ext.sh | Hämtar Riksbankens aktuella valutor för ett visst datum |
 
-riksbanken.sh & json_to_xml.sh
+__riksbanken.sh__ & __json_to_xml.sh__
 ```
 $ sudo ./riksbanken.sh
 Hämtade valutakurser skrivs till filen Valutakurser_20250501_224512_00002.json
@@ -16,7 +16,7 @@ $ sudo ./json_to_xml.sh Valutakurser_20250501_224512_00002.json
 XML-filen har skapats - Valutakurser_20250501_224512_00002.xml
 ```
 
-Valutakurser_20250501_224512_00002.json
+__Valutakurser_20250501_224512_00002.json__
 ```json
 [
   {
@@ -235,7 +235,7 @@ Valutakurser_20250501_224512_00002.json
 ]
 ```
 
-Valutakurser_20250501_224512_00002.xml
+__Valutakurser_20250501_224512_00002.xml__
 ```xml
 <valutakurser>
   <valuta>
@@ -507,7 +507,7 @@ Valutakurser_20250501_224512_00002.xml
 ```
 ___
 
-riksbanken_ext.sh & json_to_xml.sh
+__riksbanken_ext.sh__ & __json_to_xml.sh__
 ```
 $ sudo ./riksbanken_ext.sh
 Datum 2025-05-01
@@ -547,7 +547,7 @@ XML-filen har skapats - Valutakurser_ext_20240429_224717_00002.xml
 ```
 
 
-Valutakurser_ext_20240429_224717_00002.json
+__Valutakurser_ext_20240429_224717_00002.json__
 ```json
 [
   {
