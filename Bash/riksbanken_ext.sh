@@ -31,8 +31,27 @@
 # ====[ Filnamn för att lagra löpnummer ]====
 filnamn="riksbanken_ext.cnt"
 
-dagensdatum=$(date "+%Y-%m-%d")
-#dagensdatum="2025-04-25"
+# ====[ RegExp enligt ISO 8601 ]====
+DATUM_ISO_8601_REGEX="^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+
+# ====[ Kontrollera om ett argument skickas med och att det är ett datum ]====
+if [ "$#" -eq 1 ]; then
+
+  echo "Kontrollerar om datum stämmer enligt ISO 8601 ($1)"
+  
+  # ====[ Kontrollera så att det första argumentet är datum enligt ISO 8601 (ÅÅÅÅ-MM-DD) ]=====
+  if [[ $1 =~ $DATUM_ISO_8601_REGEX ]]; then
+      echo " Stämmer enligt ISO 8601...."
+      dagensdatum=$1
+  else
+      echo " Stämmer inte enligt ISO 8601! Ange datum i formatet ÅÅÅÅ-MM-DD"
+      exit 1
+  fi
+else
+  dagensdatum=$(date "+%Y-%m-%d")
+fi
+
+echo "Datum $dagensdatum"
 
 # ====[ URL för att kontrollera om det är en bankdag ]====
 api_url_bankdag=https://api.riksbank.se/swea/v1/CalendarDays/${dagensdatum}/${dagensdatum}
@@ -53,16 +72,26 @@ api_url_bankdag=https://api.riksbank.se/swea/v1/CalendarDays/${dagensdatum}/${da
 svarsdata=$(curl -s "$api_url_bankdag") 
 bankdag=$(echo $svarsdata | jq ".[].swedishBankday")
 
+echo "Kontrollerar om det är bankdag....."
+
 if [ "$bankdag" = "false" ]; then
-    echo "Ej bankdag..... avbryter"
+    echo " Ej bankdag..... avbryter"
     exit 1
+  else
+    echo " Bankdag....ok"  
 fi
 
 # ====[ URL till Riksbankens öppna API - hämta alla aktiva valutor önskat datum ]====
 api_url="https://api.riksbank.se/swea/v1/Observations/ByGroup/130/$dagensdatum/$dagensdatum"
 
-# ====[ Dagens datum ]====
-datum=$(date "+%Y%m%d")
+# ====[ Byt ut filnamn om ett datum skickas med som argument ]====
+if [ "$#" -eq 1 ]; then
+  # ====[ Argumentets datum ]====
+  datum="${1//-/}"
+else
+  # ====[ Dagens datum ]====
+  datum=$(date "+%Y%m%d")
+fi
 
 # ====[ Tidpunkten ]====
 tid=$(date "+%H%M%S")
@@ -97,4 +126,4 @@ fi
 
 # ====[ Skriv den hämtade datan till fil ]
 echo "Hämtade valutakurser skrivs till filen $filnamn"
-echo "$svarsdata" > "data/$filnamn"
+echo "$svarsdata" > "$filnamn"
