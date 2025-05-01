@@ -9,5 +9,5 @@ __SPA-Sokning2 (Single Page Application - en fil med hela "applikationen")__
 __Tradstruktur__
 - Olika strukturer för att visualisera JSON-strukturer/data med hjälp av JavaScript och HTML
 
-__Bash__
-- Lite smått & gott när det gäller bash
+__Valutakurser-Riksbanken__
+- Hämtar valutor ifrån Riksbankens öppna API
