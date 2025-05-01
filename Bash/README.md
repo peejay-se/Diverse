@@ -1,5 +1,5 @@
 # Bash 
-Konvertering mellan JSON och XML och vice versa
+Hämta valutakurser ifrån Riksbankens öppna API
 
 | Command | Description |
 | --- | --- |
