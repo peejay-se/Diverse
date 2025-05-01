@@ -11,3 +11,6 @@ __Tradstruktur__
 
 __Valutakurser-Riksbanken__
 - Hämtar valutor ifrån Riksbankens öppna API
+
+__Valutakurser-ExchangeRateAPI__
+- Hämtar valutor ifrån Exchange API
