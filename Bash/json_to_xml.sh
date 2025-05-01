@@ -55,9 +55,9 @@ jq -c '.[]' "$json_fil" | while read -r item; do
 
     # ====[ Kontrollera om det är ett exponentiellt värde ]====
     if [[ $varde =~ ^[0-9]+(e|E)([-+]?[0-9]+)$ ]]; then
-        echo "  <datum>$(printf "%.10f" "${varde}")</datum>" >> "$filnamn_ut"
+        echo "  <varde>$(printf "%.10f" "${varde}")</varde>" >> "$filnamn_ut"
     else
-        echo "  <datum>$varde</datum>" >> "$filnamn_ut"
+        echo "  <varde>$varde</varde>" >> "$filnamn_ut"
     fi
 
     echo " </valuta>" >> "$filnamn_ut"
