@@ -1,4 +1,4 @@
-# Bash-Valutakurser
+# Valutakurser-Riksbanken
 Hämta valutakurser ifrån Riksbankens öppna API
 
 | Command | Description |
