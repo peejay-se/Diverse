@@ -39,7 +39,7 @@ fi
 
 # ====[ Skriv den hämtade datan till fil ]
 echo "Hämtade valutakurser skrivs till filen $filnamn"
-echo "$svarsdata" > "data/$filnamn"
+echo "$svarsdata" > "$filnamn"
 
 # ====[ Senaste uppdatering ]====
 senaste_uppdatering=$(echo "$svarsdata" | jq -r '.time_last_update_unix')
