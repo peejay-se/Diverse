@@ -3,8 +3,11 @@
 #  =====================================================================================================
 #             Konvertera JSON-filen som är nedladdad ifrån Riksbanken till en XML-fil
 #  =====================================================================================================
-#    Skapad:   2025-04-27
-#    Filnamn:  json_to_xml.sh
+#    Skapad av: Peter Jonsson
+#    Version:   1.0
+#		 Datum:     2025-04-27
+#		 Revision:  xxxx-xx-xx v x.xx
+#    Filnamn:   json_to_xml.sh
 #  =====================================================================================================
 #    Detta skript utnyttjar funktionerna:
 #     jq - commandline JSON processor [version 1.6]

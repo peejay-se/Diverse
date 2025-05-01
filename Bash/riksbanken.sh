@@ -3,8 +3,11 @@
 #  =====================================================================================================
 #               Ladda ned valutakurserna ifrån Riksbanken (laddar ned gamla och nya valutor)
 #  =====================================================================================================
-#    Skapad:   2025-04-27
-#    Filnamn:  riksbanken.sh
+#    Skapad av: Peter Jonsson
+#    Version:   1.0
+#		 Datum:     2025-04-27
+#		 Revision:  xxxx-xx-xx v x.xx
+#    Filnamn:   riksbanken.sh
 #  =====================================================================================================
 #   När publiceras valutakurserna?
 #   Nya noteringar för valutakurserna publiceras varje svensk bankdag kl. 16.15. 
