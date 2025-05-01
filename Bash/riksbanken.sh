@@ -5,8 +5,8 @@
 #  =====================================================================================================
 #    Skapad av: Peter Jonsson
 #    Version:   1.0
-#		 Datum:     2025-04-27
-#		 Revision:  xxxx-xx-xx v x.xx
+#    Datum:     2025-04-27
+#    Revision:  xxxx-xx-xx v x.xx
 #    Filnamn:   riksbanken.sh
 #  =====================================================================================================
 #   När publiceras valutakurserna?
